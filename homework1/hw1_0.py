@@ -2,7 +2,7 @@ import os
 
 def getQueryFilesString():
     dTFs = []
-    path = "./Query"
+    path = "./data/Query"
     files= os.listdir(path)
     queryFiles = []
     for file in files:

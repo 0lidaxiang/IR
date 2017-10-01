@@ -3,7 +3,7 @@
 import os
 import collections
 
-path = "./Document"
+path = "./data/Document"
 files= os.listdir(path)
 s = []
 for file in files:
