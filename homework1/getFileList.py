@@ -45,10 +45,6 @@ def getFilesListFromFile():
 
     return new
 
-
-# res1 = getFilesListFromFile()
-# res2 = getFilesList()
-# print res1==res2
 res = getFilesListFromFile()
 print "len(res): " , len(res)
 

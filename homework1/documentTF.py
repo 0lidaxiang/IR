@@ -12,27 +12,10 @@ def createDocumentTF():
         print fname + ' file has exists.'
     else:
         f = open(fname, 'w')
-        # dIDFs = []
         for sub in allDictionary:
-            # dIDF = {}
-            # dIDF[sub] = 0
-
-            dTF = {}
-            dTFLists = []
-
-            i = 0
             strWrite = sub + " "
             for fv in fileList:
-                dTFList = {}
                 strWrite = strWrite + " "  + str(fv.count(sub))
-
-                i = i + 1
-                dTFLists.append(dTFList)
-
-            #     if sub in fv:
-            #         dIDF[sub] = dIDF[sub] + 1
-            # dIDFs.append(dIDF)
-
             f.write(strWrite + "\n")
         f.close()
         print "Write to file over."
