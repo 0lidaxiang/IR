@@ -8,72 +8,97 @@ queryFilesList = hw1_0.getQueryFilesList()
 # print queryFilesList[0]
 
 # step1 : get the dictionary
-# allDictionary = hw1_1.getDictionary()
+allDictionary = hw1_1.getDictionary()
 # print allDictionary
-
-# for sub in queryFilesList[0]:
-#     print sub
-# print queryFilesList[0]
 
 
 # step2 : document term weight
-# TF: 每個query的每個單詞在某個文檔裏面出現次數
-# [{"word in a query" : countInADocument, "document name": documentName},
-
-# {"another word in a query" : countIn Another Document, "document name": documentName},
+# TF: 字典裏 的每個單詞在某個文檔裏面出現次數
+# [{"word name " :  documentName - list[{documentName : wordOccursTimes}]},
 # ]
-# IDF： 在所有文檔裏面，包含一個query的一個單詞的文檔有多少個，然後每個query的每個單詞
+# IDF： 在所有文檔裏面，包含字典裏 的一個單詞的文檔有多少個，然後每個query的每個單詞
+# [{"word in a query" : document number that contains this word},
+# ]
+
+print "---------- get allDictionary ----------------"
 
 
-dTFs = []
 path = "./data/Document"
 files= os.listdir(path)
 fileList = []
 fileNameList = []
-for file in files:
-    f = open(path+"/"+file);
+for fileName in files:
+    f = open(path+"/"+fileName);
     iter_f = iter(f);
     strtemp = ""
     lineNumber = 1
 
-    fileNameList.append(file)
-    # print file
+    fileNameList.append(fileName)
 
     for line in iter_f:
         if lineNumber > 3:
-            # print "str.count(sub) : ", str.count(sub)
             strtemp = strtemp + line
         else:
           lineNumber = lineNumber + 1
-
     fileList.append(strtemp)
 
-for sub in queryFilesList[0]:
+print "---------- get fileList ----------------"
+
+
+dTFs = []
+dIDFs = []
+for sub in allDictionary:
+    dIDF = {}
+    dIDF[sub] = 0
+
+    dTF = {}
+    dTFLists = []
+
     i = 0
     for fv in fileList:
-        dTF = {}
-        dTF["documentName"] = fileNameList[i]
+        dTFList = {}
+        # dTF[sub] = fv.count(sub)
+        # dTF["documentName"] = fileNameList[i]
+        dTFList[fileNameList[i]] = fv.count(sub)
         i = i + 1
+        dTFLists.append(dTFList)
+        # print type(dTFLists) , dTFLists
+        # print "\n"
 
-        dTF[sub] = fv.count(sub)
-        dTFs.append(dTF)
+        if sub in fv:
+            dIDF[sub] = dIDF[sub] + 1
+    dIDFs.append(dIDF)
 
+    dTF[sub] = dTFLists
+    # print "---------- get dTF" + str(y)  , dTF,  "----------------"
+    # y= y + 1
+
+    # dTF[sub] = len(dTFLists)
+    dTFs.append(dTF)
+
+print "----------start print result1 ----------------"
 k =0
 for v in dTFs:
     if k < 10:
         print v
         k  = k + 1
 
-# print dTF
-# print len(fileList)
+print "----------start print result2 ----------------"
 
+k =0
+for v in dIDFs:
+    if k < 10:
+        print v
+        k  = k + 1
 
-
-#
+print len(dTFs)
+print len(dIDFs)
 # print "\n"
 
+
+
 # step3 : query term weight
-# TF: 每個query的每個單詞在 query 裏面出現次數
+# TF: 字典的每個單詞在 query 裏面出現次數
 
 # step5 :
 # document term weight 向量
