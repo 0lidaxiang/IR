@@ -1,8 +1,10 @@
 import os
 import dictionary
 import getFileList
+import math
 
 def createIDFFile():
+    allDocumentNumber = 2265.0
     fname = "idfResult.txt"
     res =  os.path.isfile(fname)
     if res:
@@ -20,8 +22,8 @@ def createIDFFile():
             for fv in fileList:
                 if sub in fv:
                     dIDFsub = dIDFsub + 1
-
-            strWrite = sub + " "  + str(dIDFsub)
+            idfNum = math.log(allDocumentNumber / dIDFsub)
+            strWrite = sub + " "  + str(idfNum)
 
             f.write(strWrite + "\n")
         f.close()

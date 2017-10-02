@@ -7,18 +7,21 @@ import documentTF
 import queryTF
 import idfResult
 
+import numpy as np
+
 # stpe 0 : get the query list
 queryFilesList = queryList.getQueryFilesList()
 # print queryFilesList[0]
 
 # step1 : get the dictionary and document tf,idf and query tf
 allDictionary = dictionary.getDictionary()
+wordNumber = len(allDictionary)
 documentTF = documentTF.getDocumentTF()
-idf = idfResult.getIDF()
+idfList = idfResult.getIDF()
 queryTF = queryTF.getQueryTF()
 
 
-# step2 : document term weight
+# step2 : document term weight，先取得一個 document 作爲豎着向量
 # TF: 字典裏 的每個單詞在某個文檔裏面出現次數
 # [{"word name " :  documentName - list[{documentName : wordOccursTimes}]},
 # ]
@@ -26,26 +29,51 @@ queryTF = queryTF.getQueryTF()
 # [{"word in a query" : document number that contains this word},
 # ]
 
-# print "----------start print result2 ----------------"
-# k =0
-# for v in dIDFs:
-#     if k < 10:
-#         print v
-#         k  = k + 1
-#
-# # print len(dTFs)
-# # print "\n"
+print "\n------------ start compute the document weight vector -----------------"
+document2WeightVec = []
 
-# step3 : query term weight
+index = 0
+while index < wordNumber:
+    tf = float(documentTF[index].split()[2])
+    idf = float(idfList[0].split()[1])
+    document2Weight = (tf * idf)
+    document2WeightVec.append(document2Weight)
+    index += 1
+
+print "------------ finish compute the document weight vector -----------------\n"
+
+
+# step3 : query term weight， 作爲橫着向量
 # TF: 字典的每個單詞在 query 裏面出現次數
+print "\n------------ start compute the query weight vector -----------------"
+query1WeightVec = []
 
+index = 0
+while index < wordNumber:
+    tf = float(queryTF[index].split()[1])
+    idf = float(idfList[0].split()[1])
+    query1Weight = (tf * idf)
+    query1WeightVec.append(query1Weight)
+    index += 1
 
-# step4 :
+print "------------ finish compute the query weight vector -----------------\n"
+
+# step4 :compute the 向量點乘
 # document term weight 向量
 # query term weight 向量
 
+print "\n\n\n------------ compute the cos value -----------------\n"
+a = np.array(query1WeightVec)
+b = np.array(document2WeightVec)
+aL = np.sqrt(a.dot(a))
+bL = np.sqrt(b.dot(b))
 
-# step5 : 向量點乘
+x = np.dot(a, b)
+y = aL * bL
+cos_angle = x / y
+print "query1 and document2 cos_angle : " + str(cos_angle)
+
+# step5 : compute the 向量長度
 
 # step6 : 計算 cos
 
