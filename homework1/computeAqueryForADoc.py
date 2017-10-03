@@ -12,8 +12,9 @@ import getFileList
 allDictionary = dictionary.getDictionary()
 wordNumber = len(allDictionary)
 idfList = idfResult.getIDF()
+numberOfDoc = 2265
 
-def computeAquery(queryIndex):
+def computeAquery(queryIndex, resultFileName):
     docTF = documentTF.getDocumentTF()
     querTF = queryTF.getQueryTF()
     fileNameList = getFileList.getFileNameList()
@@ -28,8 +29,8 @@ def computeAquery(queryIndex):
 
     i = 0
     query1Result = []
-    f = open("query1Result.txt", 'w')
-    while i < 10:
+    f = open(resultFileName , 'w')
+    while i < numberOfDoc:
 
         document2WeightVec = []
         query1WeightVec = []
@@ -64,18 +65,12 @@ def computeAquery(queryIndex):
         i+=1
 
     query1Result.sort(key=lambda k: k['cosVal'], reverse=True)
-    return query1Result
+
+    queryFilesList1 = queryList.getQueryFilesList()
+    # return query1Result
 
 # res = computeAquery(14)
 # print "len(res): " , len(res)
-# k = 0
-# for v in res:
-#     # if v < 0.3:
-#         if k < 10:
-#             k+=1
-#             print v
-
-# print "\n\n-----------0.5-------------"
 # k = 0
 # for v in res:
 #     if v["cosVal"] < 0.5:
