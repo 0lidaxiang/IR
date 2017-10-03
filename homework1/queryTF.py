@@ -4,19 +4,21 @@ import queryList
 
 def createQueryTFFile():
     allDictionary = dictionary.getDictionary()
-    oneQuery = queryList.getQueryFilesList()[0]
-
     fname = 'queryTFResult.txt'
     res =  os.path.isfile(fname)
+
     if res:
-        print fname + ' file has exists.'
+        # print fname + ' file has exists.'
+        pass
     else:
+        tempQueryList = queryList.getQueryFilesList()
         f = open(fname, 'w')
         for sub in allDictionary:
-            strWrite = sub + " "  + str(oneQuery.count(sub))
+            strWrite = sub
+            for v in tempQueryList:
+                strWrite = strWrite + " "  + str(v["content"].count(sub))
             f.write(strWrite + "\n")
         f.close()
-        print "Write to file over."
 
 def getQueryTF():
     createQueryTFFile()
@@ -29,10 +31,13 @@ def getQueryTF():
         res.append(strTemp)
     return res
 
-res = getQueryTF()
-print len(res)
-k =0
-for v in res:
-    if k < 10:
-        print v
-        k  = k + 1
+# res = getQueryTF()
+# print len(res)
+# k =0
+# for v in res:
+#     if k < 10:
+#         print v
+#         k  = k + 1
+#
+# print "\n\n"
+# print queryList.getQueryFilesList()[0]

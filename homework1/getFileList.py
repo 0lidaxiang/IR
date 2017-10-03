@@ -5,6 +5,7 @@ def getFilesList():
     files= os.listdir(path)
     fileList = []
     fileNameList = []
+
     for fileName in files:
         f = open(path+"/"+fileName);
         iter_f = iter(f);
@@ -19,20 +20,49 @@ def getFilesList():
             else:
               lineNumber = lineNumber + 1
         fileList.append(strtemp)
+
+
+
     return fileList
+
+def getFileNameList():
+
+    fname = "fileNameList.txt"
+    res1 =  os.path.isfile(fname)
+    if res1:
+        # print fname + 'file has exists.'
+        pass
+    else:
+        path = "./data/Document"
+        files= os.listdir(path)
+        fileList = []
+
+        f = open(fname, 'w')
+        for fileName in files:
+            f.write(fileName + "\r\n")
+        f.close()
+
+    res = []
+    with open('./fileNameList.txt') as f:
+        lines = f.read().splitlines()
+    for line in lines:
+        strTemp = ''.join(line.split("\r\n"))
+        res.append(strTemp)
+    return res
 
 def createFilesListFile():
     fname = "filesList.txt"
     res =  os.path.isfile(fname)
     if res:
-        print 'file has exists.'
+        # print 'file has exists.'
+        pass
     else:
         f = open(fname, 'w')
         fileList = getFilesList()
         for fileStr in fileList:
             f.write(fileStr + "\r\n")
         f.close()
-        print "Write to file over."
+        # print "Write to file over."
 
 def getFilesListFromFile():
     createFilesListFile()
@@ -45,11 +75,11 @@ def getFilesListFromFile():
 
     return new
 
-res = getFilesListFromFile()
-print "len(res): " , len(res)
-
-k =0
-for v in res:
-    if k < 10:
-        print v
-        k  = k + 1
+# res = getFilesListFromFile()
+# print "len(res): " , len(res)
+#
+# k =0
+# for v in res:
+#     if k < 10:
+#         print v
+#         k  = k + 1

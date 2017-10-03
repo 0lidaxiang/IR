@@ -9,7 +9,8 @@ def createDictionary():
     fname = "dictionary.txt"
     res =  os.path.isfile(fname)
     if res:
-        print fname + ' file has exists.'
+        # print fname + ' file has exists.'
+        pass
     else:
         f = open(fname, 'w')
         all_the_text = "".join(str(x) for x in s)
@@ -31,11 +32,11 @@ def getDictionary():
         res.append(strTemp)
     return res
 
-res = getDictionary()
-print "len(res): " , len(res)
-
-k =0
-for v in res:
-    if k < 10:
-        print v
-        k  = k + 1
+# res = getDictionary()
+# print "len(res): " , len(res)
+#
+# k =0
+# for v in res:
+#     if k < 10:
+#         print v
+#         k  = k + 1

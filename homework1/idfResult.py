@@ -8,7 +8,8 @@ def createIDFFile():
     fname = "idfResult.txt"
     res =  os.path.isfile(fname)
     if res:
-        print fname + ' file has exists.'
+        # print fname + ' file has exists.'
+        pass
     else:
         f = open(fname, 'w')
         dIDFs = []
@@ -27,7 +28,7 @@ def createIDFFile():
 
             f.write(strWrite + "\n")
         f.close()
-        print "Write to file over."
+        # print "Write to " + fname + "file over."
 
 def getIDF():
     createIDFFile()
@@ -40,11 +41,11 @@ def getIDF():
         res.append(strTemp)
     return res
 
-res =  getIDF()
-print "len(res): " , len(res)
-
-k =0
-for v in res:
-    if k < 10:
-        print v
-        k  = k + 1
+# res =  getIDF()
+# print "len(res): " , len(res)
+#
+# k =0
+# for v in res:
+#     if k < 10:
+#         print v
+#         k  = k + 1
