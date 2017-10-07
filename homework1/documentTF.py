@@ -9,7 +9,6 @@ def createDocumentTF():
     fname = 'documentTFResult.txt'
     res =  os.path.isfile(fname)
     if res:
-        # print fname + ' file has exists.'
         pass
     else:
         f = open(fname, 'w')
@@ -29,7 +28,7 @@ def getDocumentTF():
         lines = f.read().splitlines()
     for line in lines:
         strTemp = ''.join(line.split("\r\n"))
-        res.append(strTemp)
+        res.append(map(int, strTemp.split()) )
     return res
 
 # res = getDocumentTF()

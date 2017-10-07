@@ -27,13 +27,22 @@ if not os.path.exists(resultDic):
 # step7 : 排序比較對於這個 query ，最接近的結果 cosVal 越大
 
 # step8: 找到所有的 query 的 排序結果
-print "------------------------------ Main Program Start ----------------"
 
-queryFilesList = queryList.getQueryFilesList()
+
+queryFilesList = queryList.getQueryFilesName()
+# print queryFilesList
+print "------------------------------ Main Program Start ----------------"
+#
+resultIndex = 1
+query = queryFilesList[0]
+compute.computeAquery(resultIndex+1, resultDic + "res-" + queryFilesList[resultIndex]["fileName"])
+print str(resultIndex+1).ljust(2) , " compute  " + query["fileName"] + " over. "
 print len(queryFilesList)
-resultIndex = 0
-for query in queryFilesList:
-    compute.computeAquery(resultIndex+1, resultDic + "res-" + queryFilesList[resultIndex]["fileName"])
-    print str(resultIndex+1).ljust(2) , " compute  " + query["fileName"] + " over. "
-    resultIndex += 1
+
+
+# resultIndex = 0
+# for query in queryFilesList:
+#     compute.computeAquery(resultIndex+1, resultDic + "res-" + queryFilesList[resultIndex]["fileName"])
+#     print str(resultIndex+1).ljust(2) , " compute  " + query["fileName"] + " over. "
+#     resultIndex += 1
 print "------------------------------ Main Program  Over ----------------"
