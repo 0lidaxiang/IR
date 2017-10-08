@@ -6,10 +6,9 @@ import getFileList
 
 def createDictionary():
     s = getFileList.getFilesListFromFile()
-    fname = "dictionary.txt"
+    fname = "./initialResult/dictionary.txt"
     res =  os.path.isfile(fname)
     if res:
-        # print fname + ' file has exists.'
         pass
     else:
         f = open(fname, 'w')
@@ -25,7 +24,7 @@ def getDictionary():
     createDictionary()
 
     res = []
-    with open('./dictionary.txt') as f:
+    with open('./initialResult/dictionary.txt') as f:
         lines = f.read().splitlines()
     for line in lines:
         strTemp = ''.join(line.split("\r\n"))

@@ -4,7 +4,7 @@ import getFileList
 
 def createIDFFile():
     allDocumentNumber = 2265.0
-    fname = "idfResult.txt"
+    fname = "./initialResult/idfResult.txt"
     res =  os.path.isfile(fname)
     if res:
         # print fname + ' file has exists.'
@@ -13,27 +13,27 @@ def createIDFFile():
         f = open(fname, 'w')
         dIDFs = []
         allDictionary = dictionary.getDictionary()
-        fileList = getFileList.getFilesList()
-
+        fileList = getFileList.getFilesListFromFile()
         for sub in allDictionary:
             dIDF = {}
             dIDFsub = 0
 
             for fv in fileList:
-                if sub in fv:
+                if sub in fv.split():
                     dIDFsub = dIDFsub + 1
             idfNum = allDocumentNumber / dIDFsub
             strWrite = sub + " "  + str(idfNum)
 
             f.write(strWrite + "\n")
         f.close()
+
         # print "Write to " + fname + "file over."
 
 def getIDF():
     createIDFFile()
 
     res = []
-    with open('./idfResult.txt') as f:
+    with open('./initialResult/idfResult.txt') as f:
         lines = f.read().splitlines()
     for line in lines:
         strTemp = ''.join(line.split("\r\n"))

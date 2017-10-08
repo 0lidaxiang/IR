@@ -1,10 +1,9 @@
 import os
 
 def createQueryList():
-    fname = 'queryList.txt'
+    fname = './initialResult/queryList.txt'
     res =  os.path.isfile(fname)
     if res:
-        print fname + " has exists."
         pass
     else:
         dTFs = []
@@ -26,7 +25,7 @@ def createQueryList():
             queryFiles.append(query)
         f.close()
 
-        fname = "./queryList.txt"
+        fname = "./initialResult/queryList.txt"
         f = open(fname, 'w')
         for query in queryFiles:
             strWrite = query["fileName"] + " " + query["content"]
@@ -36,7 +35,7 @@ def createQueryList():
 def getQueryFilesName():
     createQueryList()
     res = []
-    with open('./queryList.txt') as f:
+    with open('./initialResult/queryList.txt') as f:
         lines = f.read().splitlines()
     for line in lines:
         query = {}
@@ -49,7 +48,7 @@ def getQueryFilesName():
 def getQueryFilesList():
     createQueryList()
     res = []
-    with open('./queryList.txt') as f:
+    with open('./initialResult/queryList.txt') as f:
         lines = f.read().splitlines()
     for line in lines:
         query = {}

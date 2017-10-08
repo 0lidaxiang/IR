@@ -27,7 +27,7 @@ def getFilesList():
 
 def getFileNameList():
 
-    fname = "fileNameList.txt"
+    fname = "./initialResult/fileNameList.txt"
     res1 =  os.path.isfile(fname)
     if res1:
         # print fname + 'file has exists.'
@@ -43,7 +43,7 @@ def getFileNameList():
         f.close()
 
     res = []
-    with open('./fileNameList.txt') as f:
+    with open('./initialResult/fileNameList.txt') as f:
         lines = f.read().splitlines()
     for line in lines:
         strTemp = ''.join(line.split("\r\n"))
@@ -51,7 +51,7 @@ def getFileNameList():
     return res
 
 def createFilesListFile():
-    fname = "filesList.txt"
+    fname = "./initialResult/filesList.txt"
     res =  os.path.isfile(fname)
     if res:
         # print 'file has exists.'
@@ -67,7 +67,7 @@ def createFilesListFile():
 def getFilesListFromFile():
     createFilesListFile()
     new = []
-    with open('./filesList.txt') as f:
+    with open('./initialResult/filesList.txt') as f:
         lines = f.read().splitlines()
     for line in lines:
         strTemp = ''.join(line.split("\r\n"))

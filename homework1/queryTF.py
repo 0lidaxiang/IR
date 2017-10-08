@@ -4,7 +4,7 @@ import queryList
 
 def createQueryTFFile():
     allDictionary = dictionary.getDictionary()
-    fname = 'queryTFResult.txt'
+    fname = './initialResult/queryTFResult.txt'
     res =  os.path.isfile(fname)
 
     if res:
@@ -16,7 +16,7 @@ def createQueryTFFile():
         for sub in allDictionary:
             strWrite = sub
             for v in tempQueryList:
-                strWrite = strWrite + " "  + str(v["content"].count(sub))
+                strWrite = strWrite + " "  + str(v["content"].split().count(sub))
             f.write(strWrite + "\n")
         f.close()
 
@@ -24,7 +24,7 @@ def getQueryTF():
     createQueryTFFile()
 
     res = []
-    with open('./queryTFResult.txt') as f:
+    with open('./initialResult/queryTFResult.txt') as f:
         lines = f.read().splitlines()
     for line in lines:
         strTemp = ''.join(line.split("\r\n"))

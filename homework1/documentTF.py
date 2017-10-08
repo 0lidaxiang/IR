@@ -6,7 +6,7 @@ def createDocumentTF():
     allDictionary = dictionary.getDictionary()
     fileList = getFileList.getFilesListFromFile()
 
-    fname = 'documentTFResult.txt'
+    fname = './initialResult/documentTFResult.txt'
     res =  os.path.isfile(fname)
     if res:
         pass
@@ -15,7 +15,7 @@ def createDocumentTF():
         for sub in allDictionary:
             strWrite = sub + " "
             for fv in fileList:
-                strWrite = strWrite + " "  + str(fv.count(sub))
+                strWrite = strWrite + " "  + str(fv.split().count(sub))
             f.write(strWrite + "\n")
         f.close()
         # print " Write to " +fname + " file over."
@@ -24,7 +24,7 @@ def getDocumentTF():
     createDocumentTF()
 
     res = []
-    with open('./documentTFResult.txt') as f:
+    with open('./initialResult/documentTFResult.txt') as f:
         lines = f.read().splitlines()
     for line in lines:
         strTemp = ''.join(line.split("\r\n"))
