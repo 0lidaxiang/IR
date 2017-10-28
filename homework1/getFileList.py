@@ -4,7 +4,6 @@ def getFilesList():
     path = "./data/Document"
     files= os.listdir(path)
     fileList = []
-    fileNameList = []
 
     for fileName in files:
         f = open(path+"/"+fileName);
@@ -12,17 +11,12 @@ def getFilesList():
         strtemp = ""
         lineNumber = 1
 
-        fileNameList.append(fileName)
-
         for line in iter_f:
             if lineNumber > 3:
                 strtemp = strtemp + line.rstrip("-1\r\n")
             else:
               lineNumber = lineNumber + 1
         fileList.append(strtemp)
-
-
-
     return fileList
 
 def getFileNameList():
