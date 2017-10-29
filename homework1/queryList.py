@@ -8,10 +8,11 @@ def createQueryList():
     else:
         dTFs = []
         path = "./data/Query"
+
         files= os.listdir(path)
         queryFiles = []
         for file in files:
-            f = open(path+"/"+file);
+            f = open(path+"/"+ file);
             iter_f = iter(f);
             strtemp = ""
             lineNumber = 1
@@ -31,9 +32,7 @@ def createQueryList():
             strWrite = query["fileName"] + " " + query["content"]
             f.write(strWrite + "\n")
         f.close()
-
 def getQueryFilesName():
-    createQueryList()
     res = []
     with open('./initialResult/queryList.txt') as f:
         lines = f.read().splitlines()
@@ -41,7 +40,6 @@ def getQueryFilesName():
         query = {}
         strTemp = ''.join(line.split("\r\n"))
         query["fileName"] = map(str, strTemp.split())[0]
-        # query["fileName"] = map(str, strTemp.split())[0]
         res.append(query)
     return res
 
@@ -57,14 +55,3 @@ def getQueryFilesList():
         query["content"] = strTemp[1]
         res.append(query)
     return res
-
-# res =  getQueryFilesList()
-# print "len(res): " , len(res)
-# print "query[0] type: " , type(res[0])
-# print "query[0] type: " , res[0]
-
-# k =0
-# for v in res:
-#     if k < 10:
-#         print v
-#         k  = k + 1

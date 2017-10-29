@@ -1,6 +1,5 @@
 # coding: utf-8
 import os
-import numpy as np
 
 initialProcess = "./initialResult/"
 if not os.path.exists(initialProcess):
@@ -13,26 +12,28 @@ queryFilesList = queryList.getQueryFilesName()
 
 print "------------------------------ Main Program Start ----------------"
 
-resultIndex = 5
-queryResult = compute.computeAquery(resultIndex+1)
-query = queryFilesList[resultIndex+1]
-print str(resultIndex+1).ljust(2) , " compute  " + query["fileName"] + " over. "
+resList = []
+resultIndex = 0
+for query in queryFilesList:
+    queryResult = compute.computeAquery(resultIndex+1)
+    print str(resultIndex+1).ljust(2) , " compute  " + query["fileName"] + " over. "
 
+    oneLine = {}
+    oneLine["queryName"] = query["fileName"]
+    oneLine["content"] = ""
+    for queryRes in queryResult:
+        oneLine["content"] = oneLine["content"] + str(queryRes["fileName"]) + " "
+    resList.append(oneLine)
+    resultIndex += 1
 
-# f = open("submission.txt" , 'w')
-# line1 = "Query,RetrievedDocuments"
-# f.write(line1 + "\r\n")
-# resultIndex = 0
-# for query in queryFilesList:
-#     queryResult = compute.computeAquery(resultIndex+1)
-#     print str(resultIndex+1).ljust(2) , " compute  " + query["fileName"] + " over. "
-#
-#     oneLine = query["fileName"] + ","
-#     for queryRes in queryResult:
-#         oneLine = oneLine + str(queryRes["fileName"]) + " "
-#     f.write(oneLine + "\r\n")
-#
-#     resultIndex += 1
-#
-# f.close()
+resList.sort(key=lambda k: k['queryName'], reverse=False)
+
+f = open("submission.txt" , 'w')
+line1 = "Query,RetrievedDocuments"
+f.write(line1 + "\r\n")
+
+for value in resList:
+    f.write(value["queryName"] + "," + value["content"] + "\r\n")
+
+f.close()
 print "------------------------------ Main Program  Over ----------------"
