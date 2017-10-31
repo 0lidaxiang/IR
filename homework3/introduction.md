@@ -7,14 +7,15 @@ python3 main.py
 ```
 
 ## steps:
-+ 1 : get the relevant documents
++ get the dictionary, allFilesContent,
++ get the wordNumber in one document and this document length, and get the c(w,d),P(w|d)
 
-+ 2 : get the answer set of my IR system
++ give K=5(topics number). create and give value randomly for P(d) matrix,P(w|T) matrix and P(T|d) matrix but the sum is equal to 1 for every matrixs.
 
-+ 3 : get the relevant documents in the answer set
++ E step and M step, train 50 times.
 
-+ 4 : compute the precision of each relevant documents
++ get the P(T|d) matrix.
 
-+ 5 : compute the Average precision
++ maximize the total log-likelihood of a given training collection and record every train.And check.
 
-+ 6 :  compute the mean Average precision
++ give α β and  α+β = 1. compute the P(q|d) and sort
