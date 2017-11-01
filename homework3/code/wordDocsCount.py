@@ -42,14 +42,25 @@ def getWordDocCount():
         lines = f.read().splitlines()
     for line in lines:
         strTemp = ''.join(line.split("\r\n"))
-        res.append(strTemp)
+        aDocWordCountList = strTemp.split(" ")
+        del(aDocWordCountList[-1])
+        tempList = []
+        for value in aDocWordCountList:
+            results = value.split(":")
+            tempList.append(list(map(int, results)))
+        res.append(tempList)
     return res
 
-res = getWordDocCount()
-print("len(res): " , len(res))
-
-k =0
-for v in res:
-    if k < 3:
-        print(v)
-        k  = k + 1
+# res = getWordDocCount()
+# print("len(res): " , len(res))
+# print("len(res)[0]: " , len(res[0]))
+# print("len(res)[0][0]: " , len(res[0][0]))
+# print(type(res[0]))
+# print(type(res[0][0]))
+# print(type(res[0][0][0]))
+# print(res[0][0])
+# k =0
+# for v in res:
+#     if k < 3:
+#         print(v)
+#         k  = k + 1
