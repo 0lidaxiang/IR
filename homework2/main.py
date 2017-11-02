@@ -4,7 +4,7 @@ import answerSet
 
 relevantDoc = relevantDoc.getRelevantDocList("./source/solution.txt")
 # homework1 my submission
-answerSet = answerSet.getAnswerSetList("./source/mySubmission.txt")
+answerSet = answerSet.getAnswerSetList("./source/submission.txt")
 # example submission
 # answerSet = answerSet.getAnswerSetList("./source/submission.txt")
 

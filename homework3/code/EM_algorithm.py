@@ -80,11 +80,12 @@ def m_step():
                 sum_cw_d_P_T_wd += count_w_d_i_j  * P_T_wd[k][j][i]
 
             sum_Allcw_d_P_T_wd = 0
-            for _i in range(wNumber):
-                for j in range(dNumber):
+            for j in range(dNumber):
+                for _i in range(wNumber):
                     count_w_d_i_j = 0
-                    if count_w_d[j][_i][0] == wordList[_i]:
-                        count_w_d_i_j = count_w_d[j][_i][1]
+                    for value in count_w_d[j]:
+                        if value[0] == wordList[_i]:
+                            count_w_d_i_j = count_w_d[j][_i][1]
                     sum_Allcw_d_P_T_wd += count_w_d_i_j  * P_T_wd[k][j][_i]
             if sum_Allcw_d_P_T_wd <= 0:
                 sum_Allcw_d_P_T_wd = 1e-6
@@ -101,8 +102,8 @@ def m_step():
                 sum_cw_d_P_T_wd += count_w_d_i_j  * P_T_wd[k][j][i]
 
             sum_Allcw_d = 0
-            for _i in range(wNumber):
-                for j in range(dNumber):
+            for j in range(dNumber):
+                for _i in range(wNumber):
                     count_w_d_i_j = 0
                     if count_w_d[j][_i][0] == wordList[_i]:
                         count_w_d_i_j = count_w_d[j][_i][1]
