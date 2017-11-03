@@ -113,7 +113,7 @@ def train():
     start = datetime.now()
     fname = "../maxLikehood_" + str(datetime.now().strftime('%Y-%m-%d')) + ".log"
     f = open(fname, 'w')
-    for i in range(1, 3):
+    for i in range(1, 51):
         start = datetime.now()
         e_step()
         print("iteration %d, E-step excution time = %.10s"%(i,  datetime.now()-start))
