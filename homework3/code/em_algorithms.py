@@ -32,27 +32,46 @@ P_T_wd = numpy.zeros(shape=(topicNum * dNumber,wNumber))
 
 count_w_d = wordDocsCount.getWordDocCount()
 noCount_w_d = wordDocsNoCount.getWordDocNoCount()
+noCount_w_dNum = len(noCount_w_d)
 print("initialProbability stop " , datetime.now()-start, "\n")
 
 max_likehood = 0
 
 # -------------------- EM algorithm -----------------------------
 def e_step():
-    for i in range(wNumber):
-        for d in range(dNumber):
-            if ("".join([wordList[i], " "])) in noCount_w_d[d]:
-                # print( wordList[i]+ " ",  noCount_w_d[d], "\n")
-                sum_w_t_d = 0
-                for kk in range(topicNum):
-                    sum_w_t_d += math.log10( P_w_T[i][kk]) + math.log10(P_T_d[kk][d])
-                if sum_w_t_d <= 0:
-                    sum_w_t_d = 1e-6
 
-                for k in range(topicNum):
-                    P_w_T_i_k = math.log10(P_w_T[i][k])
-                    P_T_d_k_d = math.log10( P_T_d[k][d])
-                    index = d * k
-                    P_T_wd[index][i] = (P_w_T_i_k + P_T_d_k_d) / sum_w_t_d
+    for d in range(dNumber):
+        d_noCount_w_d = noCount_w_d[d]
+        d_noCount_w_dNum = len(d_noCount_w_d)
+        for ni in range(d_noCount_w_dNum):
+            i = int(d_noCount_w_d[ni][1])
+            sum_w_t_d = 0
+            for kk in range(topicNum):
+                sum_w_t_d += math.log10( P_w_T[i][kk]) + math.log10(P_T_d[kk][d])
+            if sum_w_t_d <= 0:
+                sum_w_t_d = 1e-6
+
+            for k in range(topicNum):
+                P_w_T_i_k = math.log10(P_w_T[i][k])
+                P_T_d_k_d = math.log10( P_T_d[k][d])
+                index = d * k
+                P_T_wd[index][i] = (P_w_T_i_k + P_T_d_k_d) / sum_w_t_d
+
+    # for i in range(wNumber):
+    #     for d in range(dNumber):
+    #         if ("".join([wordList[i], " "])) in noCount_w_d[d]:
+    #             # print( wordList[i]+ " ",  noCount_w_d[d], "\n")
+    #             sum_w_t_d = 0
+    #             for kk in range(topicNum):
+    #                 sum_w_t_d += math.log10( P_w_T[i][kk]) + math.log10(P_T_d[kk][d])
+    #             if sum_w_t_d <= 0:
+    #                 sum_w_t_d = 1e-6
+    #
+    #             for k in range(topicNum):
+    #                 P_w_T_i_k = math.log10(P_w_T[i][k])
+    #                 P_T_d_k_d = math.log10( P_T_d[k][d])
+    #                 index = d * k
+    #                 P_T_wd[index][i] = (P_w_T_i_k + P_T_d_k_d) / sum_w_t_d
 def m_step():
     # compute P_w_T
     for k in range(topicNum):

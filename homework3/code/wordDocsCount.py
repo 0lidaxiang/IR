@@ -9,7 +9,6 @@ from collections import OrderedDict
 
 def createWordDocCount():
     allFilesContent = document.getAllFilesContent()
-    allDictionary = dictionary.getDictionary()
     fname = "../initialResult/wordNumber.txt"
     res =  os.path.isfile(fname)
 

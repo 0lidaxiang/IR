@@ -10,7 +10,7 @@ from collections import OrderedDict
 def createWordDocNoCount():
     allFilesContent = document.getAllFilesContent()
     allDictionary = dictionary.getDictionary()
-    fname = "../initialResult/wordCount.txt"
+    fname = "../initialResult/wordIndex.txt"
     res =  os.path.isfile(fname)
 
     if res:
@@ -29,7 +29,7 @@ def createWordDocNoCount():
                 for wordName in OrderedDict(sorted(countDic.items())):
                     wordNum = countDic[wordName]
                     if wordNum > 0 and wordName != "\n":
-                        strWrite  += wordName + " "
+                        strWrite  += wordName + ":" + str(allDictionary.index(wordName)) + " "
                 strWrite += "\r\n"
             index += 1
         f.write(strWrite)
@@ -38,23 +38,23 @@ def createWordDocNoCount():
 def getWordDocNoCount():
     createWordDocNoCount()
     res = []
-    with open('../initialResult/wordCount.txt') as f:
+    with open('../initialResult/wordIndex.txt') as f:
         lines = f.read().splitlines()
     for line in lines:
         strTemp = ''.join(line.split("\r\n"))
-        # aDocWordCountList = strTemp.split(" ")
-        # del(aDocWordCountList[-1])
-        # tempList = []
-        # for value in aDocWordCountList:
-            # results = value.split(":")
-            # tempList.append(value)
-        res.append(strTemp)
+        aDocWordCountList = strTemp.split(" ")
+        del(aDocWordCountList[-1])
+        tempList = []
+        for value in aDocWordCountList:
+            results = value.split(":")
+            tempList.append(results)
+        res.append(tempList)
     return res
 
 def getAllWordDocNoCount():
     createWordDocNoCount()
     res = []
-    with open('../initialResult/wordCount.txt') as f:
+    with open('../initialResult/wordIndex.txt') as f:
         lines = f.read().splitlines()
     for line in lines:
         strTemp = ''.join(line.split("\r\n"))
@@ -67,9 +67,12 @@ def getAllWordDocNoCount():
     return res
 
 # res = getAllWordDocNoCount()
-# print(len(res))
-# res = getWordDocNoCount()
-# k =0
+res = getWordDocNoCount()
+print(len(res))
+print(len(res[0]))
+print(res[0][0])
+print(res[0][0][0])
+k =0
 # for v in res:
 #     if k < 3:
 #         print(v)
