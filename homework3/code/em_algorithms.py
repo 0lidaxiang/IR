@@ -30,7 +30,8 @@ noCount_w_d = wordDocsNoCount.getWordDocNoCount()
 # noCount_w_dNum = len(noCount_w_d)
 dict_DocCountWord = wordDocsCount.getDict_DocCountWord()
 onlyWordsByDoc = wordDocsNoCount.getOnlyWordDocNoCount()
-print("initialProbability time: " , datetime.now()-start)
+print("initial time: " ,  str(datetime.now()-start).split(':', 3)[2], "(sec)")
+
 # -------------------- EM algorithm -----------------------------
 def e_step():
     for k in range(topicNum):
@@ -51,8 +52,6 @@ def e_step():
                 P_T_wd[index][i] = (P_w_T_i_k * P_T_d_k_d) / sum_w_t_d
 def m_step():
     for k in range(topicNum):
-        # print (k , "m_step")
-
         # denominator
         w_T_denominator = 0
         for i in range(wNumber):
@@ -75,7 +74,6 @@ def m_step():
             if w_T_denominator <= 0:
                 w_T_denominator = 1e-6
             P_w_T[i][k] = molecular / w_T_denominator
-        # print("finish P_w_T")
 
         # compute P_T_d , # all documents
         for d in range(dNumber):
@@ -112,7 +110,6 @@ def compute_log_likelihood():
     return log_likelihood
 
 def train():
-    startTrain = datetime.now()
     fname = "../log_likelihood_" + str(datetime.now().strftime('%Y-%m-%d')) + ".log"
     f = open(fname, 'w')
     for i in range(1, 11):
@@ -124,10 +121,11 @@ def train():
 
         nowTime = datetime.now()
         f.write('{:<4d} {:20s}   log_likelihood = {:9f}\n'.format(i, nowTime.strftime('%Y-%m-%d %H:%M:%S'), log_likelihood))
-        print('{:<4d} excuteTime: {:9s}(sec) ,log_likelihood = {:9f}'.format(i, str(nowTime - startE).split(':', 3)[2],  log_likelihood))
+        print('{:<4d} excuteTime: {:9s}(sec) , log_likelihood = {:9f}'.format(i, str(nowTime - startE).split(':', 3)[2],  log_likelihood))
     f.close()
 
 
 print("\ntrain start -------------------- ")
+startTrain = datetime.now()
 train()
 print("\ntrain excution time is ", datetime.now()-startTrain)
