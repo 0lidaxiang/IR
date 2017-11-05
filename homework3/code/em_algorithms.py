@@ -20,22 +20,17 @@ dNumber = len(docList) # 2265
 topicNum=5
 
 P_d = np.random.dirichlet(np.ones(dNumber),size=1).tolist()[0]
-print("\ninitialProbability start")
 start = datetime.now()
-# np.ones(wNumber) is rows , size=dNumber is cols
 P_w_T = np.random.dirichlet(np.ones(topicNum),size= wNumber)
 P_T_d = np.random.dirichlet(np.ones(dNumber),size= topicNum)
 P_T_wd = numpy.zeros(shape=(topicNum * dNumber,wNumber))
-# P_T_wd = np.random.dirichlet(np.ones(wNumber),size= topicNum * dNumber)
-# print(len(P_T_wd))
-# print(len(P_T_wd[0]))
 
 count_w_d = wordDocsCount.getWordDocCount()
 noCount_w_d = wordDocsNoCount.getWordDocNoCount()
 # noCount_w_dNum = len(noCount_w_d)
 dict_DocCountWord = wordDocsCount.getDict_DocCountWord()
 onlyWordsByDoc = wordDocsNoCount.getOnlyWordDocNoCount()
-print("initialProbability stop " , datetime.now()-start, "\n")
+print("initialProbability time: " , datetime.now()-start)
 # -------------------- EM algorithm -----------------------------
 def e_step():
     for k in range(topicNum):
@@ -58,6 +53,7 @@ def m_step():
     for k in range(topicNum):
         # print (k , "m_step")
 
+        # denominator
         w_T_denominator = 0
         for i in range(wNumber):
             for j in range(len(dict_DocCountWord[i])):
@@ -66,41 +62,15 @@ def m_step():
         # compute P_w_T , all words
         for i in range(wNumber):
             molecular = 0
-            # denominator = 0
-
             # all documents
             for j in range(len(dict_DocCountWord[i])):
                 d = dict_DocCountWord[i][j][0]
-                # wIndex_in_now_doc_WordIndex = -1
-                # temp_wIndex = 0
-                # for value in now_doc_WordIndex:
-                    # if int(value[1]) == i:
-                    #     wIndex_in_now_doc_WordIndex = temp_wIndex
-                    #     break
-                    # temp_wIndex += 1
-                # words = onlyWordsByDoc[d]
-                # word = wordList[i]
-                # if word in words:
-                # now_doc_WordIndex = noCount_w_d[d]
-                # wIndex_in_now_doc_WordIndex = i
-                # print(wordList[i], onlyWordsByDoc[d][wIndex_in_now_doc_WordIndex])
 
-            # if wIndex_in_now_doc_WordIndex > -1:
                 index = d * (k+1)
-                para1 = math.log(int(dict_DocCountWord[i][j][1]))
-                para2 = math.log(P_T_wd[index][i])
-
+                para1 = math.log10(int(dict_DocCountWord[i][j][1]))
+                para2 = math.log10(P_T_wd[index][i])
                 # molecular
                 molecular += para1 + para2
-
-                # denominator
-                # now_doc_WordIndex = noCount_w_d[d]
-                # for ni in range(len(now_doc_WordIndex)):
-                #     _i = int(now_doc_WordIndex[ni][1])
-                #     # index = d * (k+1)
-                #     deno_para1 = math.log(int(count_w_d[ d ][ni][1]))
-                #     deno_para2 = math.log(P_T_wd[index][_i])
-                #     denominator += deno_para1 + deno_para2
 
             if w_T_denominator <= 0:
                 w_T_denominator = 1e-6
@@ -118,8 +88,8 @@ def m_step():
             for dd in range(len(now_doc_WordIndex)):
                 _i = int(now_doc_WordIndex[dd][1])
                 index = d * (k+1)
-                mole_para1 = math.log(int(count_w_d[ d ][dd][1]))
-                mole_para2 = math.log(P_T_wd[index][_i])
+                mole_para1 = math.log10(int(count_w_d[ d ][dd][1]))
+                mole_para2 = math.log10(P_T_wd[index][_i])
 
                 molecular += mole_para1 + mole_para2
 
@@ -127,9 +97,7 @@ def m_step():
 
             if denominator <= 0:
                 denominator = 1e-6
-            # print(i, molecular, denominator)
             P_T_d[k][d] = molecular / denominator
-        # print("finish P_T_d")
 
 max_likehood = 0
 def compute_max_likehood():
@@ -140,8 +108,9 @@ def compute_max_likehood():
             P_wT_Td = 0
             for k in range(topicNum):
                 P_wT_Td += P_w_T[i][k] * P_T_d[k][dict_DocCountWord[i][j][0]]
-            max_likehood += int(dict_DocCountWord[i][j][1]) * math.log(P_d[j] * P_wT_Td)
+            max_likehood += int(dict_DocCountWord[i][j][1]) * math.log10(P_d[j] * P_wT_Td)
     return max_likehood
+
 def train():
     startTrain = datetime.now()
     fname = "../maxLikehood_" + str(datetime.now().strftime('%Y-%m-%d')) + ".log"
@@ -159,7 +128,7 @@ def train():
 
         nowTime = datetime.now().strftime('%Y-%m-%d %H:%M:%S');
         f.write("%s  iteration %d, max-likelihood = %.10f\n"%(nowTime, i, max_likehood))
-        # print("%s  iteration %d, max-likelihood = %.6f"%(nowTime, i, max_likehood))
+        print("%s  iteration %d, max-likelihood = %.6f"%(nowTime, i, max_likehood))
     f.close()
     print(str(i) + " train excution time is ", datetime.now()-startTrain)
 
