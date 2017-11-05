@@ -32,7 +32,9 @@ P_T_wd = numpy.zeros(shape=(topicNum * dNumber,wNumber))
 
 count_w_d = wordDocsCount.getWordDocCount()
 noCount_w_d = wordDocsNoCount.getWordDocNoCount()
-noCount_w_dNum = len(noCount_w_d)
+# noCount_w_dNum = len(noCount_w_d)
+dict_DocCountWord = wordDocsCount.getDict_DocCountWord()
+onlyWordsByDoc = wordDocsNoCount.getOnlyWordDocNoCount()
 print("initialProbability stop " , datetime.now()-start, "\n")
 # -------------------- EM algorithm -----------------------------
 def e_step():
@@ -54,44 +56,56 @@ def e_step():
                 P_T_wd[index][i] = (P_w_T_i_k * P_T_d_k_d) / sum_w_t_d
 def m_step():
     for k in range(topicNum):
-        print (k , "m_step")
+        # print (k , "m_step")
+
+        w_T_denominator = 0
+        for i in range(wNumber):
+            for j in range(len(dict_DocCountWord[i])):
+                w_T_denominator += dict_DocCountWord[i][j][1]
 
         # compute P_w_T , all words
         for i in range(wNumber):
             molecular = 0
-            denominator = 0
+            # denominator = 0
 
             # all documents
-            for d in range(noCount_w_dNum):
-                now_doc_WordIndex = noCount_w_d[d]
-                wIndex_in_now_doc_WordIndex = -1
-                temp_wIndex = 0
-                for value in now_doc_WordIndex:
-                    if int(value[1]) == i:
-                        wIndex_in_now_doc_WordIndex = temp_wIndex
-                        break
-                    temp_wIndex += 1
-                if wIndex_in_now_doc_WordIndex > -1:
-                    index = d * (k+1)
-                    para1 = math.log(int(count_w_d[ d ][wIndex_in_now_doc_WordIndex][1]))
-                    para2 = math.log(P_T_wd[index][i])
+            for j in range(len(dict_DocCountWord[i])):
+                d = dict_DocCountWord[i][j][0]
+                # wIndex_in_now_doc_WordIndex = -1
+                # temp_wIndex = 0
+                # for value in now_doc_WordIndex:
+                    # if int(value[1]) == i:
+                    #     wIndex_in_now_doc_WordIndex = temp_wIndex
+                    #     break
+                    # temp_wIndex += 1
+                # words = onlyWordsByDoc[d]
+                # word = wordList[i]
+                # if word in words:
+                # now_doc_WordIndex = noCount_w_d[d]
+                # wIndex_in_now_doc_WordIndex = i
+                # print(wordList[i], onlyWordsByDoc[d][wIndex_in_now_doc_WordIndex])
 
-                    # molecular
-                    molecular += para1 + para2
+            # if wIndex_in_now_doc_WordIndex > -1:
+                index = d * (k+1)
+                para1 = math.log(int(dict_DocCountWord[i][j][1]))
+                para2 = math.log(P_T_wd[index][i])
 
-                    # denominator
-                    # now_doc_WordIndex = noCount_w_d[d]
-                    for ni in range(len(now_doc_WordIndex)):
-                        _i = int(now_doc_WordIndex[ni][1])
-                        # index = d * (k+1)
-                        deno_para1 = math.log(int(count_w_d[ d ][ni][1]))
-                        deno_para2 = math.log(P_T_wd[index][_i])
-                        denominator += deno_para1 + deno_para2
+                # molecular
+                molecular += para1 + para2
 
-            if denominator <= 0:
-                denominator = 1e-6
-            P_w_T[i][k] = molecular / denominator
-        print("finish P_w_T")
+                # denominator
+                # now_doc_WordIndex = noCount_w_d[d]
+                # for ni in range(len(now_doc_WordIndex)):
+                #     _i = int(now_doc_WordIndex[ni][1])
+                #     # index = d * (k+1)
+                #     deno_para1 = math.log(int(count_w_d[ d ][ni][1]))
+                #     deno_para2 = math.log(P_T_wd[index][_i])
+                #     denominator += deno_para1 + deno_para2
+
+            if w_T_denominator <= 0:
+                w_T_denominator = 1e-6
+            P_w_T[i][k] = molecular / w_T_denominator
+        # print("finish P_w_T")
 
         # compute P_T_d , # all documents
         for d in range(dNumber):
@@ -115,48 +129,39 @@ def m_step():
                 denominator = 1e-6
             # print(i, molecular, denominator)
             P_T_d[k][d] = molecular / denominator
-        print("finish P_T_d")
+        # print("finish P_T_d")
 
 max_likehood = 0
 def compute_max_likehood():
-    temp_max_likehood = 0
+    max_likehood = 0
+
     for i in range(wNumber):
-        for j in range(dNumber):
+        for j in range(len(dict_DocCountWord[i])):
             P_wT_Td = 0
             for k in range(topicNum):
-                P_wT_Td += P_w_T[i][k] * P_T_d[k][j]
-            temp_max_likehood += count_w_d[i][j] * math.log(P_d[j] * P_wT_Td)
-    max_likehood = temp_max_likehood
-
+                P_wT_Td += P_w_T[i][k] * P_T_d[k][dict_DocCountWord[i][j][0]]
+            max_likehood += int(dict_DocCountWord[i][j][1]) * math.log(P_d[j] * P_wT_Td)
+    return max_likehood
 def train():
     startTrain = datetime.now()
     fname = "../maxLikehood_" + str(datetime.now().strftime('%Y-%m-%d')) + ".log"
     f = open(fname, 'w')
-    for i in range(1, 2):
+    for i in range(1, 20):
         startE = datetime.now()
         e_step()
         print("iteration %d, E-step excution time = %.10s"%(i,  datetime.now()-startE))
 
-        # print(len(P_T_wd[0]))
-        # print(P_T_wd[0])
-        # print(P_T_wd[1])
-        # print(P_T_wd[2])
-        # print(P_T_wd[3])
-        # print(P_T_wd[4])
-
         startM = datetime.now()
         m_step()
         print("iteration %d, M-step excution time = %.10s"%(i,  datetime.now()-startM))
-        #
-        # compute_max_likehood()
-        #
-        # nowTime = datetime.now().strftime('%Y-%m-%d %H:%M:%S');
-        # f.write("%s  iteration %d, max-likelihood = %.10f\n"%(nowTime, i, max_likehood))
+
+        max_likehood = compute_max_likehood()
+
+        nowTime = datetime.now().strftime('%Y-%m-%d %H:%M:%S');
+        f.write("%s  iteration %d, max-likelihood = %.10f\n"%(nowTime, i, max_likehood))
         # print("%s  iteration %d, max-likelihood = %.6f"%(nowTime, i, max_likehood))
     f.close()
     print(str(i) + " train excution time is ", datetime.now()-startTrain)
-
-
 
 print("\ntrain start")
 train()

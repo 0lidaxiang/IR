@@ -67,6 +67,8 @@ def getOnlyWordDocNoCount():
         res.append(tempList)
     return res
 
+
+
 # res = getAllWordDocNoCount()
 # res = getOnlyWordDocNoCount()
 # print(len(res))
