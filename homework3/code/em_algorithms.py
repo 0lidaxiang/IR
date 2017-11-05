@@ -1,10 +1,8 @@
 #!/usr/bin/python3
 # coding: utf-8
 
-# import initialProbability
-import numpy as np, numpy.random
+import numpy as np
 import math
-from operator import mul
 from datetime import datetime
 
 import dictionary
@@ -12,25 +10,22 @@ import document
 import wordDocsCount
 import wordDocsNoCount
 
-Tnumber = 5
+startInitial = datetime.now()
+
 docList = document.getFilesName()
 wordList = dictionary.getDictionary()
 wNumber = len(wordList)
 dNumber = len(docList) # 2265
-topicNum=5
-
+topicNum = 10
 P_d = np.random.dirichlet(np.ones(dNumber),size=1).tolist()[0]
-start = datetime.now()
 P_w_T = np.random.dirichlet(np.ones(topicNum),size= wNumber)
 P_T_d = np.random.dirichlet(np.ones(dNumber),size= topicNum)
-P_T_wd = numpy.zeros(shape=(topicNum * dNumber,wNumber))
-
+P_T_wd = np.zeros(shape=(topicNum * dNumber,wNumber))
 count_w_d = wordDocsCount.getWordDocCount()
 noCount_w_d = wordDocsNoCount.getWordDocNoCount()
-# noCount_w_dNum = len(noCount_w_d)
 dict_DocCountWord = wordDocsCount.getDict_DocCountWord()
-onlyWordsByDoc = wordDocsNoCount.getOnlyWordDocNoCount()
-print("initial time: " ,  str(datetime.now()-start).split(':', 3)[2], "(sec)")
+
+print("initial time: " ,  str(datetime.now()-startInitial).split(':', 3)[2], "(sec)")
 
 # -------------------- EM algorithm -----------------------------
 def e_step():
@@ -75,7 +70,7 @@ def m_step():
                 w_T_denominator = 1e-6
             P_w_T[i][k] = molecular / w_T_denominator
 
-        # compute P_T_d , # all documents
+        # compute P_T_d ,  all documents
         for d in range(dNumber):
             molecular = 0
             denominator = 0
@@ -90,7 +85,6 @@ def m_step():
                 mole_para2 = P_T_wd[index][_i]
 
                 molecular += mole_para1 * mole_para2
-
                 denominator += mole_para1
 
             if denominator <= 0:
@@ -112,8 +106,8 @@ def compute_log_likelihood():
 def train():
     fname = "../log_likelihood_" + str(datetime.now().strftime('%Y-%m-%d')) + ".log"
     f = open(fname, 'w')
-    for i in range(1, 11):
-        startE = datetime.now()
+    for i in range(1, 50):
+        startOneTrain = datetime.now()
 
         e_step()
         m_step()
@@ -121,11 +115,12 @@ def train():
 
         nowTime = datetime.now()
         f.write('{:<4d} {:20s}   log_likelihood = {:9f}\n'.format(i, nowTime.strftime('%Y-%m-%d %H:%M:%S'), log_likelihood))
-        print('{:<4d} excuteTime: {:9s}(sec) , log_likelihood = {:9f}'.format(i, str(nowTime - startE).split(':', 3)[2],  log_likelihood))
+        print('{:<4d} excuteTime: {:9s}(sec) , log_likelihood = {:9f}'.format(i, str(nowTime - startOneTrain).split(':', 3)[2],  log_likelihood))
     f.close()
 
 
-print("\ntrain start -------------------- ")
+print("\n -------------------- train start -------------------- \n")
 startTrain = datetime.now()
 train()
-print("\ntrain excution time is ", datetime.now()-startTrain)
+print("\n -------------------- train finished -------------------- \n")
+print("train excution time is ", str(datetime.now()-startTrain).split('.', 3)[0])
