@@ -51,7 +51,7 @@ def getWordDocNoCount():
         res.append(tempList)
     return res
 
-def getAllWordDocNoCount():
+def getOnlyWordDocNoCount():
     createWordDocNoCount()
     res = []
     with open('../initialResult/wordIndex.txt') as f:
@@ -62,17 +62,20 @@ def getAllWordDocNoCount():
         del(aDocWordCountList[-1])
         tempList = []
         for value in aDocWordCountList:
-            # results = value.split(":")
-            res.append(value)
+            results = value.split(":")
+            tempList.append(results[0])
+        res.append(tempList)
     return res
 
 # res = getAllWordDocNoCount()
-res = getWordDocNoCount()
-print(len(res))
-print(len(res[0]))
-print(res[0][0])
-print(res[0][0][0])
-k =0
+# res = getOnlyWordDocNoCount()
+# print(len(res))
+# print(len(res[0]))
+# print(res[0][0])
+# print(res[0][1])
+# print(res[0][2])
+# print(res[0][0][0])
+# k =0
 # for v in res:
 #     if k < 3:
 #         print(v)
