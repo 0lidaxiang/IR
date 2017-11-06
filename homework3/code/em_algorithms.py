@@ -93,28 +93,36 @@ def m_step0():
 
             P_w_T[i][k] = molecular - w_T_denominator
 
-        # compute P_T_d ,  all documents
+        # compute P_T_d
+        # all documents
         for d in range(dNumber):
             molecular = 0
             denominator = 0
             now_doc_WordIndex = noCount_w_d[d]
             wIndex_in_now_doc_WordIndex = -1
 
+            # T_d_denominator
+            T_d_denominator = 0
+            for dd in range(len(now_doc_WordIndex)):
+                T_d_denominator += int(dict_DocCountWord[i][j][1])
+
             #  all words in a document
             for dd in range(len(now_doc_WordIndex)):
-                _i = int(now_doc_WordIndex[dd][1])
-                index = d * (k+1)
-                mole_para1 =  int(count_w_d[ d ][dd][1])
-                # mole_para1 = math.log( int(count_w_d[ d ][dd][1]) )
-                mole_para2 = P_T_wd[index][_i]
+                if dd % 2 == 0:
+                    _i = int(now_doc_WordIndex[dd][1])
+                    index = d * (k+1)
+                    logBigEle = math.log( int(count_w_d[ d ][dd][1]) )
+                    logSmallEle = P_T_wd[index][_i]
 
-                molecular += math.log(mole_para1) + mole_para2
-                denominator += mole_para1
+                    temp = 0
+                    if logBigEle < logSmallEle:
+                        temp = logBigEle
+                        logBigEle = logSmallEle
+                        logSmallEle = temp
 
-            # if denominator <= 0:
-                # denominator = 1e-6
-            # print(molecular , math.log(denominator))
-            P_T_d[k][d] = molecular / math.log(denominator)
+                    molecular += logBigEle + math.log(1 + math.exp(logSmallEle - logBigEle))
+
+            P_T_d[k][d] = molecular - math.log(T_d_denominator)
 
 def e_step():
     for k in range(topicNum):
@@ -208,11 +216,9 @@ def train():
 
     for i in range(10):
         startOneTrain = datetime.now()
-        e_step0()
-        # m_step0()
-        # if i == 0:
-        #     e_step0()
-        #     m_step0()
+        if i == 0:
+            e_step0()
+            m_step0()
         # else:
         #     e_step()
         #     m_step()
