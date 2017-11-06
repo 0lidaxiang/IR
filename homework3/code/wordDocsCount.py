@@ -60,7 +60,7 @@ def getDict_DocCountWord():
         for line in lines:
             tempList = []
             ll = line.split(" ")
-            del(ll[-1])
+            # del(ll[-1])
             for item in ll:
                 tempList.append( list(map(int, item.split(":"))))
             result.append(tempList)
