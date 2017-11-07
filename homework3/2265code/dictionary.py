@@ -6,7 +6,8 @@ import document
 
 def createDictionary():
     s = document.getAllFilesContent()
-    fname = "../initialResult/dictionary.txt"
+    os.mkdir("../2265initialResult")
+    fname = "../2265initialResult/dictionary.txt"
     res =  os.path.isfile(fname)
 
     if res:
@@ -21,7 +22,7 @@ def createDictionary():
         f.close()
 
 def getDictionary():
-    fname = '../initialResult/dictionary.txt'
+    fname = '../2265initialResult/dictionary.txt'
     res1 =  os.path.isfile(fname)
     if res1:
         pass

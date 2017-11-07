@@ -10,16 +10,16 @@ from collections import OrderedDict
 def createWordDocNoCount():
     allFilesContent = document.getAllFilesContent()
     allDictionary = dictionary.getDictionary()
-    fname = "../initialResult/wordIndex.txt"
+    fname = "../2265initialResult/wordIndex.txt"
     res =  os.path.isfile(fname)
-
+    print(len(allFilesContent))
     if res:
         pass
     else:
         f = open(fname, 'w')
         allFileContentLists = []
         for fileContent in allFilesContent:
-            allFileContentLists.append(fileContent.split(" "))
+            allFileContentLists.append(fileContent.split())
 
         strWrite = ""
         index = 0
@@ -38,7 +38,7 @@ def createWordDocNoCount():
 def getWordDocNoCount():
     createWordDocNoCount()
     res = []
-    with open('../initialResult/wordIndex.txt') as f:
+    with open('../2265initialResult/wordIndex.txt') as f:
         lines = f.read().splitlines()
     for line in lines:
         strTemp = ''.join(line.split("\r\n"))
@@ -54,7 +54,7 @@ def getWordDocNoCount():
 def getOnlyWordDocNoCount():
     createWordDocNoCount()
     res = []
-    with open('../initialResult/wordIndex.txt') as f:
+    with open('../2265initialResult/wordIndex.txt') as f:
         lines = f.read().splitlines()
     for line in lines:
         strTemp = ''.join(line.split("\r\n"))

@@ -9,7 +9,8 @@ from collections import OrderedDict
 
 def createWordDocCount():
     allFilesContent = document.getAllFilesContent()
-    fname = "../initialResult/wordNumber.txt"
+
+    fname = "../2265initialResult/wordNumber.txt"
     res =  os.path.isfile(fname)
 
     if res:
@@ -18,18 +19,19 @@ def createWordDocCount():
         f = open(fname, 'w')
         allFileContentLists = []
         for fileContent in allFilesContent:
-            allFileContentLists.append(fileContent.split(" "))
-
+            allFileContentLists.append(fileContent.split())
         strWrite = ""
         index = 0
+        dd = 0
         for fileContentList in allFileContentLists:
             if index < len(allFileContentLists):
                 countDic = dict(Counter(allFileContentLists[index]))
                 for wordName in OrderedDict(sorted(countDic.items())):
                     wordNum = countDic[wordName]
-                    if wordNum > 0 and wordName != "\n":
+                    if wordNum > 0 and wordName != "\r\n":
                         strWrite  += wordName + ":" + str(wordNum) + " "
-                strWrite += "\r\n"
+                strWrite += "\n"
+                dd += 1
             index += 1
         f.write(strWrite)
         f.close()
@@ -37,7 +39,7 @@ def createWordDocCount():
 def getWordDocCount():
     createWordDocCount()
     res = []
-    with open('../initialResult/wordNumber.txt') as f:
+    with open('../2265initialResult/wordNumber.txt') as f:
         lines = f.read().splitlines()
     for line in lines:
         strTemp = ''.join(line.split("\r\n"))
@@ -48,10 +50,13 @@ def getWordDocCount():
             results = value.split(":")
             tempList.append(list(map(int, results)))
         res.append(tempList)
+    # print(res[-1])
+    del(res[-1])
+    # print(len(res[-1]))
     return res
 
 def getDict_DocCountWord():
-    fname = "../initialResult/dict_DocCountWord.txt"
+    fname = "../2265initialResult/dict_DocCountWord.txt"
     res =  os.path.isfile(fname)
     result = []
     if res:
@@ -65,10 +70,10 @@ def getDict_DocCountWord():
                 tempList.append( list(map(int, item.split(":"))))
             result.append(tempList)
     else:
-        with open('../initialResult/wordNumber.txt') as f:
+        with open('../2265initialResult/wordIndex.txt') as f:
             lines = f.read().splitlines()
         f = open(fname, 'w')
-        createWordDocCount()
+        # createWordDocCount()
         allDictionary = dictionary.getDictionary()
 
         for word in allDictionary:
@@ -88,7 +93,6 @@ def getDict_DocCountWord():
         f.close()
     return result
 
-# res = getDict_DocCountWord()
 # res = getWordDocCount()
 # res = getDict_DocCountWord()
 # print("len(res): " , len(res))

@@ -5,7 +5,7 @@ import os
 import document
 
 def createDocLength():
-    fname = "../initialResult/docLength.txt"
+    fname = "../2265initialResult/docLength.txt"
     allFilesContent = document.getAllFilesContent()
     res = os.path.isfile(fname)
     if res:
@@ -18,7 +18,7 @@ def createDocLength():
         f.close()
 
 def getDocLength():
-    fname = "../initialResult/docLength.txt"
+    fname = "../2265initialResult/docLength.txt"
     res1 =  os.path.isfile(fname)
     if res1:
         pass

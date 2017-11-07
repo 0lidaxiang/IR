@@ -12,31 +12,20 @@ import wordDocsNoCount
 
 startInitial = datetime.now()
 
-docList = document.getFilesName()
+# docList = document.getFilesName()
 wordList = dictionary.getDictionary()
 wNumber = len(wordList)
-dNumber = len(docList) # 2265
-topicNum = 5
+dNumber = 18461 # 18461
+topicNum = 2
 P_d = np.random.dirichlet(np.ones(dNumber),size=1).tolist()[0]
-# P_w_T = np.random.dirichlet(np.ones(topicNum),size= wNumber)
-P_w_T = get_P_w_T()
+P_w_T = np.random.dirichlet(np.ones(topicNum),size= wNumber)
 P_T_d = np.random.dirichlet(np.ones(dNumber),size= topicNum)
 P_T_wd = np.zeros(shape=(topicNum * dNumber,wNumber))
 count_w_d = wordDocsCount.getWordDocCount()
 noCount_w_d = wordDocsNoCount.getWordDocNoCount()
 dict_DocCountWord = wordDocsCount.getDict_DocCountWord()
 
-# get the P_w_T
-def get_P_w_T():
-    fname = '../P_w_K.txt'
-    # fname = '../initial18000Result/P_w_T_' + str(datetime.now().strftime('%Y-%m-%d')) + '.txt'
-    res = []
-    with open(fname) as f:
-        lines = f.read().splitlines()
-    for line in lines:
-        lineList = line.split(" ")
-        res.append(lineList)
-    return res
+print("initial time: " ,  str(datetime.now()-startInitial).split(':', 3)[2], "(sec)")
 
 # -------------------- EM algorithm -----------------------------
 def e_step():
@@ -58,6 +47,29 @@ def e_step():
                 P_T_wd[index][i] = (P_w_T_i_k * P_T_d_k_d) / sum_w_t_d
 def m_step():
     for k in range(topicNum):
+        # denominator
+        w_T_denominator = 0
+        for i in range(wNumber):
+            for j in range(len(dict_DocCountWord[i])):
+                w_T_denominator += dict_DocCountWord[i][j][1]
+
+        # compute P_w_T , all words
+        for i in range(wNumber):
+            molecular = 0
+            # all documents
+            for j in range(len(dict_DocCountWord[i])):
+                d = dict_DocCountWord[i][j][0]
+
+                index = d * (k+1)
+                para1 = int(dict_DocCountWord[i][j][1])
+                para2 = P_T_wd[index][i]
+                # molecular
+                molecular += para1 * para2
+
+            if w_T_denominator <= 0:
+                w_T_denominator = 1e-6
+            P_w_T[i][k] = molecular / w_T_denominator
+
         # compute P_T_d ,  all documents
         for d in range(dNumber):
             molecular = 0
@@ -94,7 +106,7 @@ def compute_log_likelihood():
 def train():
     fname = "../log_likelihood_" + str(datetime.now().strftime('%Y-%m-%d')) + ".log"
     f = open(fname, 'w')
-    for i in range(10):
+    for i in range(1, 50):
         startOneTrain = datetime.now()
 
         e_step()
@@ -106,21 +118,9 @@ def train():
         print('{:<4d} excuteTime: {:9s}(sec) , log_likelihood = {:9f}'.format(i, str(nowTime - startOneTrain).split(':', 3)[2],  log_likelihood))
     f.close()
 
-def write_P_T_d():
-    fname = "../2265P_T_d.txt"
-    f = open(fname, 'w')
-    for p_w_T in P_w_T:
-        strWrite = ""
-        for value in p_w_T:
-            strWrite += str(value) + " "
-        f.write(strWrite + "\n")
-    f.close()
 
-get_P_w_T()
 print("\n -------------------- train start -------------------- \n")
 startTrain = datetime.now()
 train()
 print("\n -------------------- train finished -------------------- \n")
 print("train excution time is ", str(datetime.now()-startTrain).split('.', 3)[0])
-
-write_P_T_d()
