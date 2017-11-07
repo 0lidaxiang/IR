@@ -20,31 +20,33 @@ def getTestFileContent(fname):
         res.append( list(map(int, line.split())))
     return res
 
+c_w_d = np.zeros(shape=(wNumber, dNumber), dtype=int)
+c_w_dd = []
+testFileContent = getTestFileContent("./source/Collection.txt")
 def count_w_d( ):
-    c_w_d = np.zeros(shape=(wNumber, dNumber))
-    testFileContent = getTestFileContent("./source/Collection.txt")
     for d in range(dNumber):
-        res = collections.Counter(testFileContent[d]).most_common()
-        for value in res:
-            i = value[0]
-            c_w_d[i][d] = value[1]
-    return c_w_d
+        c_w_dd.append(collections.Counter(testFileContent[d]).most_common())
+        for value in collections.Counter(testFileContent[d]).most_common():
+            c_w_d[value[0]][d] = value[1]
 
 startInitial = datetime.now()
+count_w_d( )
+
 # docList = document.getFilesName()
 # wordList = dictionary.getDictionary()
-topicNum = 5
+topicNum = 3
 P_d = np.random.dirichlet(np.ones(dNumber),size=1).tolist()[0]
-P_w_T = np.random.dirichlet(np.ones(wNumber),size=  topicNum)
+P_w_T = np.random.dirichlet(np.ones(wNumber),size= topicNum)
 
 P_T_d = np.random.dirichlet(np.ones(dNumber),size= topicNum)
-c_w_d = count_w_d( )
-# print(type(c_w_d))
-# print(type(P_w_T))
-# print(type(P_T_d))
 
-# print(len(P_w_T))
-# print(len(P_T_d))
+print(type(c_w_d))
+print(type(P_w_T))
+print(type(P_T_d))
+
+print(len(P_w_T))
+print(len(P_T_d))
+print(len(c_w_d))
 
 print("initial time: " ,  str(datetime.now()-startInitial).split(':', 3)[2], "(sec)")
 
