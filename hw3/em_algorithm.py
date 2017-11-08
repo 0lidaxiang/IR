@@ -71,18 +71,34 @@ def m_step():
         # T_d_List[i*k] = e_step(k)
         denominator = 0
         for i in range(wNumber):
-            log_X =  c_w_d[i:] + e_step_wT(k, i)
-            denominator += np.logaddexp.reduce(log_X)
+            log_X = []
+            for j in range(dNumber):
+                if c_w_d[i][j] > 0:
+                    # pass
+                    log_X.append(c_w_d[i][j] + e_step_wT(k, i))
+            if len(log_X) > 0:
+                denominator += np.logaddexp.reduce(log_X)
 
         for i in range(wNumber):
-            log_X =  c_w_d[i:] + e_step_wT(k, i)
-            molecular = np.logaddexp.reduce(log_X)
+            log_X = []
+            for j in range(dNumber):
+                if c_w_d[i][j] > 0:
+                    # pass
+                    log_X.append(c_w_d[i][j] + e_step_wT(k, i))
+
+            # log_X =  c_w_d[i:] + e_step_wT(k, i)
+            if len(log_X) > 0:
+                molecular = np.logaddexp.reduce(log_X)
             P_w_T[k][i] = molecular - denominator
 
 
         for d in range(dNumber):
-            # for i in range(wNumber):
-            log_X =  c_w_d[:d] + e_step_Td(k, d)
+            log_X = []
+            for i in range(wNumber):
+                if c_w_d[i][d] > 0:
+                    # pass
+                    log_X.append(c_w_d[i][j] + e_step_Td(k, d))
+            # log_X =  c_w_d[:d] + e_step_Td(k, d)
             molecular = np.logaddexp.reduce(log_X)
             T_d_denominator = np.logaddexp.reduce(c_w_d[:d])
             P_T_d[k][d] = molecular - T_d_denominator
