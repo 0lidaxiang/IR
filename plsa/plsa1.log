@@ -1,0 +1,132 @@
+INFO:root:V = 34529  D = 18461
+INFO:root:[ iteration ]  step 1
+INFO:root:[ iteration ] l2-l1  -96717996.791 - -13045604.940 = -83672391.851 
+INFO:root:[ iteration ]  step 2
+INFO:root:[ iteration ] l2-l1  -96677998.148 - -96717996.791 = 39998.642 
+INFO:root:[ iteration ]  step 3
+INFO:root:[ iteration ] l2-l1  -96650921.941 - -96677998.148 = 27076.207 
+INFO:root:[ iteration ]  step 4
+INFO:root:[ iteration ] l2-l1  -96619223.360 - -96650921.941 = 31698.581 
+INFO:root:[ iteration ]  step 5
+INFO:root:[ iteration ] l2-l1  -96582503.903 - -96619223.360 = 36719.457 
+INFO:root:[ iteration ]  step 6
+INFO:root:[ iteration ] l2-l1  -96554570.243 - -96582503.903 = 27933.660 
+INFO:root:[ iteration ]  step 7
+INFO:root:[ iteration ] l2-l1  -96528758.597 - -96554570.243 = 25811.646 
+INFO:root:[ iteration ]  step 8
+INFO:root:[ iteration ] l2-l1  -96497255.946 - -96528758.597 = 31502.651 
+INFO:root:[ iteration ]  step 9
+INFO:root:[ iteration ] l2-l1  -96454597.983 - -96497255.946 = 42657.963 
+INFO:root:[ iteration ]  step 10
+INFO:root:[ iteration ] l2-l1  -96396500.042 - -96454597.983 = 58097.941 
+INFO:root:[ iteration ]  step 11
+INFO:root:[ iteration ] l2-l1  -96319440.451 - -96396500.042 = 77059.591 
+INFO:root:[ iteration ]  step 12
+INFO:root:[ iteration ] l2-l1  -96221868.945 - -96319440.451 = 97571.507 
+INFO:root:[ iteration ]  step 13
+INFO:root:[ iteration ] l2-l1  -96107724.790 - -96221868.945 = 114144.154 
+INFO:root:[ iteration ]  step 14
+INFO:root:[ iteration ] l2-l1  -95987898.141 - -96107724.790 = 119826.649 
+INFO:root:[ iteration ]  step 15
+INFO:root:[ iteration ] l2-l1  -95876426.621 - -95987898.141 = 111471.521 
+INFO:root:[ iteration ]  step 16
+INFO:root:[ iteration ] l2-l1  -95783295.860 - -95876426.621 = 93130.761 
+INFO:root:[ iteration ]  step 17
+INFO:root:[ iteration ] l2-l1  -95710369.481 - -95783295.860 = 72926.379 
+INFO:root:[ iteration ]  step 18
+INFO:root:[ iteration ] l2-l1  -95654101.487 - -95710369.481 = 56267.994 
+INFO:root:[ iteration ]  step 19
+INFO:root:[ iteration ] l2-l1  -95610002.140 - -95654101.487 = 44099.347 
+INFO:root:[ iteration ]  step 20
+INFO:root:[ iteration ] l2-l1  -95574436.070 - -95610002.140 = 35566.071 
+INFO:root:[ iteration ]  step 21
+INFO:root:[ iteration ] l2-l1  -95544890.308 - -95574436.070 = 29545.762 
+INFO:root:[ iteration ]  step 22
+INFO:root:[ iteration ] l2-l1  -95519837.493 - -95544890.308 = 25052.815 
+INFO:root:[ iteration ]  step 23
+INFO:root:[ iteration ] l2-l1  -95498353.862 - -95519837.493 = 21483.631 
+INFO:root:[ iteration ]  step 24
+INFO:root:[ iteration ] l2-l1  -95479762.021 - -95498353.862 = 18591.841 
+INFO:root:[ iteration ]  step 25
+INFO:root:[ iteration ] l2-l1  -95463513.799 - -95479762.021 = 16248.222 
+INFO:root:[ iteration ]  step 26
+INFO:root:[ iteration ] l2-l1  -95449235.805 - -95463513.799 = 14277.994 
+INFO:root:[ iteration ]  step 27
+INFO:root:[ iteration ] l2-l1  -95436674.612 - -95449235.805 = 12561.192 
+INFO:root:[ iteration ]  step 28
+INFO:root:[ iteration ] l2-l1  -95425585.906 - -95436674.612 = 11088.707 
+INFO:root:[ iteration ]  step 29
+INFO:root:[ iteration ] l2-l1  -95415718.269 - -95425585.906 = 9867.637 
+INFO:root:[ iteration ]  step 30
+INFO:root:[ iteration ] l2-l1  -95406868.153 - -95415718.269 = 8850.116 
+INFO:root:[ iteration ]  step 31
+INFO:root:[ iteration ] l2-l1  -95398925.691 - -95406868.153 = 7942.462 
+INFO:root:[ iteration ]  step 32
+INFO:root:[ iteration ] l2-l1  -95391736.675 - -95398925.691 = 7189.015 
+INFO:root:[ iteration ]  step 33
+INFO:root:[ iteration ] l2-l1  -95385137.276 - -95391736.675 = 6599.400 
+INFO:root:[ iteration ]  step 34
+INFO:root:[ iteration ] l2-l1  -95379045.858 - -95385137.276 = 6091.417 
+INFO:root:[ iteration ]  step 35
+INFO:root:[ iteration ] l2-l1  -95373431.392 - -95379045.858 = 5614.466 
+INFO:root:[ iteration ]  step 36
+INFO:root:[ iteration ] l2-l1  -95368258.988 - -95373431.392 = 5172.404 
+INFO:root:[ iteration ]  step 37
+INFO:root:[ iteration ] l2-l1  -95363511.908 - -95368258.988 = 4747.080 
+INFO:root:[ iteration ]  step 38
+INFO:root:[ iteration ] l2-l1  -95359146.257 - -95363511.908 = 4365.651 
+INFO:root:[ iteration ]  step 39
+INFO:root:[ iteration ] l2-l1  -95355106.097 - -95359146.257 = 4040.160 
+INFO:root:[ iteration ]  step 40
+INFO:root:[ iteration ] l2-l1  -95351307.853 - -95355106.097 = 3798.244 
+INFO:root:[ iteration ]  step 41
+INFO:root:[ iteration ] l2-l1  -95347695.630 - -95351307.853 = 3612.222 
+INFO:root:[ iteration ]  step 42
+INFO:root:[ iteration ] l2-l1  -95344228.245 - -95347695.630 = 3467.385 
+INFO:root:[ iteration ]  step 43
+INFO:root:[ iteration ] l2-l1  -95340877.249 - -95344228.245 = 3350.996 
+INFO:root:[ iteration ]  step 44
+INFO:root:[ iteration ] l2-l1  -95337655.350 - -95340877.249 = 3221.899 
+INFO:root:[ iteration ]  step 45
+INFO:root:[ iteration ] l2-l1  -95334578.261 - -95337655.350 = 3077.089 
+INFO:root:[ iteration ]  step 46
+INFO:root:[ iteration ] l2-l1  -95331644.666 - -95334578.261 = 2933.595 
+INFO:root:[ iteration ]  step 47
+INFO:root:[ iteration ] l2-l1  -95328840.168 - -95331644.666 = 2804.498 
+INFO:root:[ iteration ]  step 48
+INFO:root:[ iteration ] l2-l1  -95326170.561 - -95328840.168 = 2669.606 
+INFO:root:[ iteration ]  step 49
+INFO:root:[ iteration ] l2-l1  -95323654.836 - -95326170.561 = 2515.725 
+INFO:root:[ iteration ]  step 50
+INFO:root:[ iteration ] l2-l1  -95321288.149 - -95323654.836 = 2366.687 
+INFO:root:[ iteration ]  step 51
+INFO:root:[ iteration ] l2-l1  -95319058.845 - -95321288.149 = 2229.304 
+INFO:root:[ iteration ]  step 52
+INFO:root:[ iteration ] l2-l1  -95316961.484 - -95319058.845 = 2097.361 
+INFO:root:[ iteration ]  step 53
+INFO:root:[ iteration ] l2-l1  -95314984.234 - -95316961.484 = 1977.250 
+INFO:root:[ iteration ]  step 54
+INFO:root:[ iteration ] l2-l1  -95313115.636 - -95314984.234 = 1868.598 
+INFO:root:[ iteration ]  step 55
+INFO:root:[ iteration ] l2-l1  -95311325.234 - -95313115.636 = 1790.402 
+INFO:root:[ iteration ]  step 56
+INFO:root:[ iteration ] l2-l1  -95309587.777 - -95311325.234 = 1737.457 
+INFO:root:[ iteration ]  step 57
+INFO:root:[ iteration ] l2-l1  -95307895.343 - -95309587.777 = 1692.434 
+INFO:root:[ iteration ]  step 58
+INFO:root:[ iteration ] l2-l1  -95306257.841 - -95307895.343 = 1637.502 
+INFO:root:[ iteration ]  step 59
+INFO:root:[ iteration ] l2-l1  -95304681.607 - -95306257.841 = 1576.234 
+INFO:root:[ iteration ]  step 60
+INFO:root:[ iteration ] l2-l1  -95303143.047 - -95304681.607 = 1538.560 
+INFO:root:[ iteration ]  step 61
+INFO:root:[ iteration ] l2-l1  -95301644.246 - -95303143.047 = 1498.801 
+INFO:root:[ iteration ]  step 62
+INFO:root:[ iteration ] l2-l1  -95300210.728 - -95301644.246 = 1433.518 
+INFO:root:[ iteration ]  step 63
+INFO:root:[ iteration ] l2-l1  -95298847.745 - -95300210.728 = 1362.983 
+INFO:root:[ iteration ]  step 64
+INFO:root:[ iteration ] l2-l1  -95297562.468 - -95298847.745 = 1285.277 
+INFO:root:[ iteration ]  step 65
+INFO:root:[ iteration ] l2-l1  -95296363.287 - -95297562.468 = 1199.181 
+INFO:root:[ iteration ]  step 66
