@@ -1,5 +1,4 @@
 import os
-import dictionary
 import getFileList
 
 def createIDFFile():
@@ -7,27 +6,23 @@ def createIDFFile():
     fname = "./initialResult/idfResult.txt"
     res =  os.path.isfile(fname)
     if res:
-        # print fname + ' file has exists.'
         pass
     else:
         f = open(fname, 'w')
         dIDFs = []
-        allDictionary = dictionary.getDictionary()
         fileList = getFileList.getFilesListFromFile()
-        for sub in allDictionary:
+        for sub in range(0, 51253):
             dIDF = {}
             dIDFsub = 0
-
             for fv in fileList:
-                if sub in fv.split():
+                if sub in fv:
                     dIDFsub = dIDFsub + 1
-            idfNum = allDocumentNumber / dIDFsub
-            strWrite = sub + " "  + str(idfNum)
-
+            strWrite = ""
+            if dIDFsub > 0:
+                idfNum = allDocumentNumber / dIDFsub
+                strWrite = str(idfNum) + " "
             f.write(strWrite + "\n")
         f.close()
-
-        # print "Write to " + fname + "file over."
 
 def getIDF():
     createIDFFile()
@@ -41,10 +36,10 @@ def getIDF():
     return res
 
 # res =  getIDF()
-# print "len(res): " , len(res)
+# print("len(res): " , len(res))
 #
 # k =0
 # for v in res:
 #     if k < 10:
-#         print v
+#         print(v)
 #         k  = k + 1

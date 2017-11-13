@@ -10,13 +10,13 @@ import computeAqueryForADoc as compute
 
 queryFilesList = queryList.getQueryFilesName()
 
-print "------------------------------ Main Program Start ----------------"
+print("------------------------------ Main Program Start ----------------")
 
 resList = []
 resultIndex = 0
 for query in queryFilesList:
-    queryResult = compute.computeAquery(resultIndex+1)
-    print str(resultIndex+1).ljust(2) , " compute  " + query["fileName"] + " over. "
+    queryResult = compute.computeAquery(resultIndex)
+    print(str(resultIndex+1).ljust(2) , " compute  " + query["fileName"] + " over. ")
 
     oneLine = {}
     oneLine["queryName"] = query["fileName"]
@@ -36,4 +36,4 @@ for value in resList:
     f.write(value["queryName"] + "," + value["content"] + "\r\n")
 
 f.close()
-print "------------------------------ Main Program  Over ----------------"
+print("------------------------------ Main Program  Over ----------------")

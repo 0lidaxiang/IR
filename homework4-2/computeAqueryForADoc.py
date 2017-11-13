@@ -4,14 +4,14 @@ import math
 import numpy as np
 
 import queryList
-import dictionary
 import documentTF
 import queryTF
 import idfResult
 import getFileList
 
-allDictionary = dictionary.getDictionary()
-wordNumber = len(allDictionary)
+# allDictionary = dictionary.getDictionary()
+# wordNumber = len(allDictionary)
+wordNumber = 51253
 idfList = idfResult.getIDF()
 numberOfDoc = 2265
 
@@ -23,13 +23,20 @@ def computeAquery(queryIndex):
     lineNum1 = 0
     qtfL = []
     idfL = []
-    while lineNum1 < wordNumber:
-        idfL.append(map(float, idfList[lineNum1].split())[1])
-        qtfL.append(map(float, querTF[lineNum1].split())[queryIndex])
+    # while lineNum1 < wordNumber:
+    #     if len(querTF[lineNum1]) > 0:
+    #         qtfL.append(list(map(float, querTF[lineNum1].split()))[queryIndex])
+    #         if len(idfList[lineNum1]) > 0:
+    #             idfL.append(list(map(float, idfList[lineNum1].split()) )[0])
+    #         else:
+    #             idfL.append(list ())
+    #             qtfL.append(list ())
+    #     else:
+    #         idfL.append(list ())
+    #         qtfL.append(list ())
+    #     lineNum1 += 1
 
-        lineNum1 += 1
-
-    maxValQTF = max(qtfL)
+    # maxValQTF = max(qtfL)
 
     i = 0
     queryResult = []
@@ -40,7 +47,8 @@ def computeAquery(queryIndex):
 
         lineNum = 0
         while lineNum < wordNumber:
-            tf = docTF[lineNum][i+1]  # the i+1 document tf
+            print(lineNum)
+            tf = docTF[lineNum][i]  # the i+1 document tf
             idf = idfL[lineNum]
             qtf = qtfL[lineNum]
 

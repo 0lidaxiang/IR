@@ -1,9 +1,7 @@
 import os
-import dictionary
 import queryList
 
 def createQueryTFFile():
-    allDictionary = dictionary.getDictionary()
     fname = './initialResult/queryTF.txt'
     res =  os.path.isfile(fname)
 
@@ -11,15 +9,18 @@ def createQueryTFFile():
         pass
     else:
         tempQueryList = queryList.getQueryFilesList()
+        print(len(tempQueryList))
         f = open(fname, 'w')
         for sub in range(0, 51253):
-            strWrite = sub
+            strWrite = ""
             for v in tempQueryList:
                 c_w = v.count(sub)
                 if c_w > 0:
-                    strWrite = strWrite + " "  + str(c_w)
+                    strWrite += str(c_w) + " "
+            # print(strWrite)
             f.write(strWrite + "\n")
         f.close()
+
 
 def getQueryTF():
     createQueryTFFile()
@@ -31,3 +32,12 @@ def getQueryTF():
         strTemp = ''.join(line.split("\r\n"))
         res.append(strTemp)
     return res
+
+# res = getQueryTF()
+# print("len(res): " , len(res))
+#
+# k =0
+# for v in res:
+#     if k < 10:
+#         print(v)
+#         k  = k + 1

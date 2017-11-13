@@ -39,7 +39,7 @@ def getQueryFilesName():
     for line in lines:
         query = {}
         strTemp = ''.join(line.split("\r\n"))
-        query["fileName"] = map(str, strTemp.split())[0]
+        query["fileName"] = list(map(str, strTemp.split()))[0]
         res.append(query)
     return res
 
