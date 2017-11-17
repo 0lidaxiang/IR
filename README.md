@@ -1,19 +1,33 @@
 # IR
 This is the homeworks of NTUST CSIE IR course in  2017.
+Homework3, homework4 and homework5 will test result in Kaggle website.
 
-## steps:
-+ 1 : get the query list
+Kaggle Three Competitions's link is below:  
+[Homework3](https://www.kaggle.com/c/NTUST-IR-HW3/leaderboard)  
+[Homework4](https://www.kaggle.com/c/NTUST-IR-HW4/leaderboard)  
+[Homework5](https://www.kaggle.com/c/NTUST-IR-HW5/leaderboard)
+# sourceData
+This is the data that shoubl be put in data or source floder in homework1,homework3,homework4.
 
-+ 2 : get the dictionary and document tf,idf and query tf
+## Homework1
+This program is right.  
+Vector Model.
 
-+ 3 : document term weight，先取得一個 document 作爲豎着向量。再找到 query term weight， 作爲橫着向量
+## Homework2
+This program is right.  
+Compute MAP.
 
-+ 4 : compute the 兩個向量點乘
+## Homework3
+This program is wrong.Algorithm maybe right.  
+EM Algorithm.
 
-+ 5 : compute the 兩個向量長度
+## Homework4
+This program is wrong.Algorithm maybe right.
+Rocchio Algorithm applying in IR system.
 
-+ 6 : 計算 cos
+## Homework5
+This program is right.  
 
-+ 7 : 排序比較對於這個 query ，最接近的結果 cosVal 越大
-
-+ 8 : 找到所有的 query 的 排序結果
+Our goal is to implement a word embedding method by using
+Keras/TensorFlow/..., and then you should leverage the
+learned embeddings to do retrieval
