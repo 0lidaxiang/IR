@@ -22,7 +22,6 @@ def createDictionary():
 
 def getDictionary():
     createDictionary()
-
     res = []
     with open('./initialResult/dictionary.txt') as f:
         lines = f.read().splitlines()
@@ -32,10 +31,10 @@ def getDictionary():
     return res
 
 # res = getDictionary()
-# print "len(res): " , len(res)
+# print ("len(res): " , len(res))
 #
 # k =0
 # for v in res:
 #     if k < 10:
-#         print v
+#         print (v)
 #         k  = k + 1

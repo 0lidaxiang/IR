@@ -26,7 +26,7 @@ This program is wrong.Algorithm maybe right.
 Rocchio Algorithm applying in IR system.
 
 ## Homework5
-This program is right.  
+This program is going on and I'm writing codes.  
 
 Our goal is to implement a word embedding method by using
 Keras/TensorFlow/..., and then you should leverage the

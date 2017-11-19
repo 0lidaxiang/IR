@@ -1,8 +1,18 @@
 import os
 
+def getFileNameList():
+    fname = "./data/doc_list.txt"
+    res = []
+    with open(fname) as f:
+        lines = f.read().splitlines()
+    for line in lines:
+        strTemp = ''.join(line.split("\r\n"))
+        res.append(strTemp)
+    return res
+
 def getFilesList():
     path = "./data/Document"
-    files= os.listdir(path)
+    files= getFileNameList()
     fileList = []
 
     for fileName in files:
@@ -19,22 +29,16 @@ def getFilesList():
         fileList.append(strtemp)
     return fileList
 
-def getFileNameList():
-    fname = "./data/doc_list.txt"
-    res = []
-    with open(fname) as f:
-        lines = f.read().splitlines()
-    for line in lines:
-        strTemp = ''.join(line.split("\r\n"))
-        res.append(strTemp)
-    return res
-
 def createFilesListFile():
-    fname = "./initialResult/allDocs.txt"
+    initialResultDir = "./initialResult/"
+    fname = initialResultDir + "allDocs.txt"
     res =  os.path.isfile(fname)
     if res:
         pass
     else:
+        if not os.path.isdir(initialResultDir):
+            os.mkdir(initialResultDir)
+
         f = open(fname, 'w')
         fileList = getFilesList()
         for fileStr in fileList:
@@ -52,11 +56,11 @@ def getFilesListFromFile():
 
     return new
 
-# res = getFilesListFromFile()
-# print "len(res): " , len(res)
+# res = getFilesList()
+# print( "len(res): " , len(res))
 #
 # k =0
 # for v in res:
-#     if k < 10:
-#         print v
+#     if k < 1:
+#         print (v)
 #         k  = k + 1
