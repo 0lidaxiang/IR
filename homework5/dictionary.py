@@ -17,7 +17,10 @@ def createDictionary():
         for word in all_the_text.split():
             if word not in result:
                 result.append(word)
-                f.write(word + "\r\n")
+        result = list(map(int, result))
+        result.sort()
+        for word in result:
+            f.write(str(word) + "\r\n")
         f.close()
 
 def getDictionary():
@@ -26,13 +29,12 @@ def getDictionary():
     with open('./initialResult/dictionary.txt') as f:
         lines = f.read().splitlines()
     for line in lines:
-        strTemp = ''.join(line.split("\r\n"))
-        res.append(strTemp)
+        # strTemp = ''.join(.split("\r\n"))
+        res.append(int(line))
     return res
 
 # res = getDictionary()
 # print ("len(res): " , len(res))
-#
 # k =0
 # for v in res:
 #     if k < 10:

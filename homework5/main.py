@@ -2,7 +2,8 @@
 import os
 from datetime import datetime
 
-answer = keras.getAnswers()
+answer = np.ones(shape=(wordsNum, 100))
+# answer = keras.getAnswers()
 # compute sim by cos_val
 queryFilesList = getQueryFiles()
 docsList = getFilesList.getFilesListFromFile()
@@ -36,17 +37,20 @@ startTime = datetime.now()
 fs = open("submission_sorted.txt" , 'w')
 queryNamesList = getQueryNamesList()
 for queryName in queryNamesList:
-    oneQueryResult = queryName
+    oneQueryResult = []
     for doc_weight in docs_weight:
+        oneLine = {}
         a = np.array(querys_weight)
         b = np.array()
         aL = np.sqrt(a.dot(a))
         bL = np.sqrt(b.dot(b))
+        cosVal = (np.dot(a,b)) / (aL * bL)
+        oneLine["fileName"] = thisFileName
+        oneLine["cosVal"] = cosVal
+        oneQueryResult.append(oneLine)
 
-        x = np.dot(a,b)
-        y = aL * bL
-        cosVal = x / y
-        oneQueryResult += str(cosVal)
-    fs.write(oneQueryResult)
+        # oneQueryResult += str(cosVal)
+    oneQueryResult.sort(key=lambda k: k['cosVal'], reverse=True)
+    fs.write(query["fileName"].join(oneQueryResult))
 fs.close()
 print("------------------ sim start compute and write result over , the excution time is : " + str(datetime.now() - startTime).split(".")[0] + "\n")
