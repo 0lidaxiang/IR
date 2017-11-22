@@ -56,6 +56,17 @@ def getFilesListFromFile():
 
     return new
 
+def getIntsFromFile():
+    createFilesListFile()
+    new = []
+    with open('./initialResult/allDocs.txt') as f:
+        lines = f.read().splitlines()
+    for line in lines:
+        strTemp = ''.join(line.split("\r\n"))
+        new.append(list(map(int, strTemp.split())))
+
+    return new
+
 # res = getFilesList()
 # print( "len(res): " , len(res))
 #
