@@ -30,18 +30,14 @@ dic = dictionary.getDictionary()
 print("docs_weight start compute ------------------ ")
 startTime = datetime.now()
 docs_weight = []
-# print(docsList[0])
 
 for doc in docsList:
     doc_length = len(doc)
-    doc_weight = np.zeros(shape=(100, 1))
-    # wordIndex = 0
+    doc_weight = np.zeros(shape=(100, ))
     for word in doc:
         c_w_d = doc.count(word)
         now_doc_weight = c_w_d * answer[dic.index(word)] / doc_length
         doc_weight = doc_weight + now_doc_weight
-        # wordIndex += 1
-    # print("doc_weight type and shape: ", type(doc_weight), doc_weight.shape, doc_weight,"\n")
     # new_doc_weight = doc_weight / doc_length
     docs_weight.append(doc_weight)
 print("docs_weight: ", type(docs_weight) , len(docs_weight))
@@ -52,26 +48,21 @@ start_query_Time = datetime.now()
 querys_weight = []
 for queryFile in queryFilesList:
     query_length = len(queryFile)
-    query_weight = np.zeros(shape=(100, 1))
+    query_weight = np.zeros(shape=(100, ))
     # wordIndex = 0
     for word in queryFile:
         c_w_d = queryFile.count(word)
         if word in dic:
             now_query_weight = c_w_d * answer[dic.index(word)] / query_length
-            # print(type(now_query_weight), len(now_query_weight), type(query_weight), len(query_weight))
             query_weight = query_weight + now_query_weight
-            # print(query_weight)
-        # else:
-            # query_weight = 0.00001 * answer[0] / query_length
-        # wordIndex += 1
     # new_query_weight = query_weight / query_length
     querys_weight.append(query_weight)
 print("querys_weight: ", type(querys_weight) , len(querys_weight))
 print("querys_weight finish compute , the excution time is : " + str(datetime.now() - start_query_Time).split(".")[0])
 
-print(docs_weight[0], docs_weight[0].shape)
-print(querys_weight[0], querys_weight[0].shape)
-print(answer[0], answer[0].shape)
+# print(docs_weight[0], docs_weight[0].shape)
+# print(querys_weight[0], querys_weight[0].shape)
+# print(answer[0], answer[0].shape)
 
 print("\n ------------------ sim start compute and write result ------------------ ")
 startTime = datetime.now()
@@ -83,7 +74,6 @@ query_index = 1
 for query_weight in querys_weight:
     oneQueryResult = []
     res_index = 0
-    # a = np.squeeze(np.asarray(query_weight))
     a = np.array(query_weight)
     aL = np.sqrt(a.dot(a))
 
@@ -92,12 +82,10 @@ for query_weight in querys_weight:
         b = np.array(doc_weight)
         bL = np.sqrt(b.dot(b))
         cosVal = (np.dot(a,b)) / (aL * bL)
-        # print((np.dot(a,b)) / (aL * bL), (np.dot(a,b)), (aL * bL))
         oneLine["fileName"] = docsNameList[res_index]
         oneLine["cosVal"] = cosVal
         oneQueryResult.append(oneLine)
         res_index += 1
-    print(oneQueryResult[0])
     oneQueryResult.sort(key=lambda k: k['cosVal'], reverse=True)
 
     queryFileName = "50" + str(query_index).zfill(3) + ".query"
@@ -105,7 +93,6 @@ for query_weight in querys_weight:
     for dicc in oneQueryResult[0:100]:
         querySortedRes += dicc["fileName"] +" "
         # querySortedRes += str(dicc["cosVal"]) +" "
-    # print(queryFileName, querySortedRes)
     fs.write(queryFileName + "," + querySortedRes + "\n")
     query_index += 1
 fs.close()
