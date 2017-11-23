@@ -29,7 +29,7 @@ def getFilesList():
         fileList.append(strtemp)
     return fileList
 
-def createFilesListFile():
+def getDocsList():
     initialResultDir = "./initialResult/"
     fname = initialResultDir + "allDocsLength.txt"
     res =  os.path.isfile(fname)
@@ -37,26 +37,10 @@ def createFilesListFile():
     if res:
         pass
     else:
-        # if not os.path.isdir(initialResultDir):
-            # os.mkdir(initialResultDir)
-        # f = open(fname, 'w')
         fileList = getFilesList()
         for fileStr in fileList:
-            # f.write(fileStr + "\r\n")
             docsLength.append(len(fileStr.split()))
-        # f.close()
     return docsLength
-
-# def getFilesListFromFile():
-#     createFilesListFile()
-#     new = []
-#     with open('./initialResult/allDocs.txt') as f:
-#         lines = f.read().splitlines()
-#     for line in lines:
-#         strTemp = ''.join(line.split("\r\n"))
-#         new.append(strTemp)
-#
-#     return new
 
 # res = createFilesListFile()
 # print( "len(res): " , len(res))

@@ -22,7 +22,7 @@ import getDocL
 
 k = 1   # context windows size
 wordsNum = 13290
-train_data_size = 100000
+train_data_size = 850
 docsL = getFileList.getIntsFromFile()
 dic = dictionary.getDictionary()
 
@@ -55,13 +55,17 @@ for doc in docsL:
     len_doc = len(doc)
     range_word = len_doc - len_doc % 3 - 2
     for wordI in range(0, range_word):
-        left_Input[inputIndex] = doc.index(doc[wordI])
-        right_Input[inputIndex] = doc.index(doc[wordI+1])
-        middle[inputIndex] = doc.index(doc[wordI+2])
+        left_Input[inputIndex] = dic.index(doc[wordI])
+        right_Input[inputIndex] = dic.index(doc[wordI+1])
+        middle[inputIndex] = dic.index(doc[wordI+2])
         inputIndex += 1
 left_Input = left_Input[0:train_data_size]
 right_Input = right_Input[0:train_data_size]
 middle = middle[0:train_data_size]
+# for value in range(0,10):
+#     print(dic[int(left_Input[value])])
+#     print(dic[int(right_Input[value])])
+#     print(dic[int(middle[value])], "\n")
 
 #preprocess the label_y
 clf = LabelBinarizer()
@@ -94,7 +98,7 @@ history = model.fit([left_Input,right_Input], label_y.reshape(train_data_size,1,
 # it can be others, like mean_absolute_error , cosine_proximity, mean_absolute_percentage_error
 loss_func_name = 'mean_squared_error'
 
-lossFileW_path = "./loss_log-" + str(datetime.now()).split()[0] + ".log"
+lossFileW_path = "./loss_log-" + str(datetime.now()).split(".")[0] + ".log"
 lossFileW = open(lossFileW_path, 'w')
 lossFileW.write(loss_func_name + " loss value : \n")
 
@@ -106,7 +110,7 @@ lossFileW.close()
 pyplot.plot(history.history[loss_func_name])
 pyplot.show()
 
-res_weights_file = "my_model_" + str(datetime.now()).split(".")[0] +".h5"
+res_weights_file = "my_model_" + str(train_data_size) + "_" + str(datetime.now()).split(".")[0] +".h5"
 model.save_weights(res_weights_file)
 
 res_embeddings_path = res_weights_file
