@@ -18,7 +18,8 @@ def getWeightFromHd5(weight_file_path):
     finally:
         f.close()
 
-answer = getWeightFromHd5("./" + "my_model-981-393018_2017-11-23 22:20:18.h5")
+# answer = getWeightFromHd5("./" + "my_model-948-393018_2017-11-23 22:08:23.h5")
+answer = getWeightFromHd5("./" + "39281-393018_2017-11-25 11:16:36.h5")
 
 print("answer type and shape: ", type(answer), answer.shape, "\n")
 
@@ -36,9 +37,9 @@ for doc in docsList:
     doc_weight = np.zeros(shape=(100, ))
     for word in doc:
         c_w_d = doc.count(word)
-        now_doc_weight = c_w_d * answer[dic.index(word)] / doc_length
+        now_doc_weight = c_w_d * answer[dic.index(word)]
         doc_weight = doc_weight + now_doc_weight
-    # new_doc_weight = doc_weight / doc_length
+    doc_weight = doc_weight / doc_length
     docs_weight.append(doc_weight)
 print("docs_weight: ", type(docs_weight) , len(docs_weight))
 print("docs_weight finish compute , the excution time is : " + str(datetime.now() - startTime).split(".")[0])
@@ -53,9 +54,9 @@ for queryFile in queryFilesList:
     for word in queryFile:
         c_w_d = queryFile.count(word)
         if word in dic:
-            now_query_weight = c_w_d * answer[dic.index(word)] / query_length
+            now_query_weight = c_w_d * answer[dic.index(word)]
             query_weight = query_weight + now_query_weight
-    # new_query_weight = query_weight / query_length
+    query_weight = query_weight / query_length
     querys_weight.append(query_weight)
 print("querys_weight: ", type(querys_weight) , len(querys_weight))
 print("querys_weight finish compute , the excution time is : " + str(datetime.now() - start_query_Time).split(".")[0])
@@ -66,7 +67,7 @@ print("querys_weight finish compute , the excution time is : " + str(datetime.no
 
 print("\n ------------------ sim start compute and write result ------------------ ")
 startTime = datetime.now()
-fs = open("submission_sorted_MAP100.txt" , 'w')
+fs = open("submission_CBOW_MAP100.txt" , 'w')
 docsNameList = getFileList.getFileNameList()
 
 fs.write("Query,RetrievedDocuments" + "\n")
@@ -74,14 +75,19 @@ query_index = 1
 for query_weight in querys_weight:
     oneQueryResult = []
     res_index = 0
-    a = np.array(query_weight)
+    a = query_weight
     aL = np.sqrt(a.dot(a))
 
     for doc_weight in docs_weight:
         oneLine = {}
-        b = np.array(doc_weight)
+        b = doc_weight
         bL = np.sqrt(b.dot(b))
-        cosVal = (np.dot(a,b)) / (aL * bL)
+        mem = np.dot(a,b)
+        dem = aL * bL
+        cosVal = 0
+        if dem != 0:
+            cosVal = mem / dem
+        # print(cosVal, mem, dem)
         oneLine["fileName"] = docsNameList[res_index]
         oneLine["cosVal"] = cosVal
         oneQueryResult.append(oneLine)
