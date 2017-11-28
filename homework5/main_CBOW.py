@@ -18,7 +18,7 @@ def getWeightFromHd5(weight_file_path):
     finally:
         f.close()
 
-# answer = getWeightFromHd5("./" + "my_model-948-393018_2017-11-23 22:08:23.h5")
+# answer = getWeightFromHd5("./" + "39281-393018_2017-11-25 11:16:36.h5")
 answer = getWeightFromHd5("./" + "39281-393018_2017-11-25 11:16:36.h5")
 
 print("answer type and shape: ", type(answer), answer.shape, "\n")
@@ -60,10 +60,6 @@ for queryFile in queryFilesList:
     querys_weight.append(query_weight)
 print("querys_weight: ", type(querys_weight) , len(querys_weight))
 print("querys_weight finish compute , the excution time is : " + str(datetime.now() - start_query_Time).split(".")[0])
-
-# print(docs_weight[0], docs_weight[0].shape)
-# print(querys_weight[0], querys_weight[0].shape)
-# print(answer[0], answer[0].shape)
 
 print("\n ------------------ sim start compute and write result ------------------ ")
 startTime = datetime.now()

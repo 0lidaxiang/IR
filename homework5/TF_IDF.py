@@ -10,7 +10,6 @@ import getQuerysList
 import getFileList
 
 def getQueryTF():
-    # createQueryTFFile()
     res = []
     with open('./initialResult/queryTF.txt') as f:
         lines = f.read().splitlines()
@@ -35,11 +34,6 @@ def computeAquery(queryIndex):
     i = 0
     queryResult = []
     qtfL = []
-
-    # lineNum1 = 0
-    # while lineNum1 < wordNumber:
-    #     qtfL.append(querTF[lineNum1][queryIndex])
-    #     lineNum1 += 1
 
     while i < numberOfDoc:
         documentWeightVec = []
@@ -73,7 +67,6 @@ def computeAquery(queryIndex):
         tempStr["cosVal"] = cosVal
         queryResult.append(tempStr)
         i+=1
-    # queryResult.sort(key=lambda k: k['cosVal'], reverse=True)
     return queryResult
 
 resultIndex = 0

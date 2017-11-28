@@ -62,10 +62,6 @@ for doc in docsL:
 left_Input = left_Input[0:train_data_size]
 right_Input = right_Input[0:train_data_size]
 middle = middle[0:train_data_size]
-# for value in range(0,10):
-#     print(dic[int(left_Input[value])])
-#     print(dic[int(right_Input[value])])
-#     print(dic[int(middle[value])], "\n")
 
 #preprocess the label_y
 clf = LabelBinarizer()
