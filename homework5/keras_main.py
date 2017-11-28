@@ -52,7 +52,7 @@ for doc in docsL:
 train_data_size = 393018 # 393018
 # left_Input = left_Input[0:train_data_size]
 # right_Input = right_Input[0:train_data_size]
-
+print("left_Input right_Input middle size : ", left_Input.shape, right_Input.shape, middle.shape)
 # define the model
 Input_Left = Input(shape=(1,))
 Input_Right = Input(shape=(1,))
@@ -66,34 +66,31 @@ model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['mse',
 print(model.summary())
 
 # total data size 393018 , 400 * 982 = 392800, 393200
-data_size = 10
-for inputs in range(0, 39301):
-    input_start = inputs * 10
-    input_end = input_start + 10
-    if inputs == 39300:
-        input_end = input_start + 8
-        data_size = 8
+data_size = 1
+for inputs in range(0, 393018):
+    # input_start = inputs
+    # input_end = input_start + 1
+    # if inputs == 39300:
+    #     input_end = input_start + 8
+    #     data_size = 8
     print(inputs)
     # print("inputs, input_start , input_end, data_size : ", inputs, input_start, input_end, data_size)
 
     #preprocess the label_y
-    now_middle = middle[input_start: input_end]
+    now_middle = middle[inputs]
     clf = LabelBinarizer()
     clf.fit(dic)
     LabelBinarizer(neg_label=0, pos_label=1)
     label_y = clf.transform(now_middle)
-    # print("label_y : ", label_y.shape, type(label_y) )
 
     # final input and label
-    now_left_Input = np.array(left_Input)[input_start: input_end]
-    now_right_Input = np.array(right_Input)[input_start: input_end]
+    now_left_Input = np.array(left_Input)[inputs]
+    now_right_Input = np.array(right_Input)[inputs]
     label_y = np.array(label_y)
-    # print("now_left_Input : ", now_left_Input.shape, type(now_left_Input))
-    # print("now_right_Input : ", now_right_Input.shape, type(now_right_Input))
 
-    history = model.fit([now_left_Input , now_right_Input], label_y.reshape( data_size,1,13290), initial_epoch=0, epochs=20, verbose=0, shuffle=False)
+    history = model.fit([now_left_Input , now_right_Input], label_y.reshape( data_size,1,13290), initial_epoch=0, epochs=2, verbose=0, shuffle=False)
 
-    if inputs % 5000 == 0 or inputs > 39280:
+    if inputs % 50000 == 0 or inputs == 390000 or inputs == 392000 or inputs == 393000  or inputs > 393015:
         # it can be others, like mean_absolute_error , cosine_proximity, mean_absolute_percentage_error
         loss_func_name = 'mean_squared_error'
         lossFileW_path = "./10Train/loss/" + str(inputs) + "-" + str(datetime.now()).split(".")[0] + ".log"

@@ -1,6 +1,6 @@
 import os
 import dictionary
-import queryList
+import getQuerysList
 
 def createQueryTFFile():
     allDictionary = dictionary.getDictionary()
@@ -10,22 +10,32 @@ def createQueryTFFile():
     if res:
         pass
     else:
-        tempQueryList = queryList.getQueryFilesList()
+        tempQueryList = getQuerysList.getIntsFromFile()
         f = open(fname, 'w')
         for sub in allDictionary:
-            strWrite = sub
+            strWrite = str(sub)
             for v in tempQueryList:
-                strWrite = strWrite + " "  + str(v["content"].split().count(sub))
+                c_wd = v.count(sub)
+                strWrite += " " + str(c_wd)
             f.write(strWrite + "\n")
         f.close()
 
-def getQueryTF():
-    createQueryTFFile()
 
-    res = []
-    with open('./initialResult/queryTF.txt') as f:
-        lines = f.read().splitlines()
-    for line in lines:
-        strTemp = ''.join(line.split("\r\n"))
-        res.append(strTemp)
-    return res
+# def getQueryTF():
+#     createQueryTFFile()
+#     res = []
+#     with open('./initialResult/queryTF.txt') as f:
+#         lines = f.read().splitlines()
+#     for line in lines:
+#         strTemp = ''.join(line.split("\r\n"))
+#         res.append(list(map(int, strTemp.split() )) )
+#     return res
+
+# res = getQueryTF()
+# print("len(res): " , len(res))
+
+# k =0
+# for v in res:
+#     if k < 1:
+#         print(v)
+#         k  = k + 1

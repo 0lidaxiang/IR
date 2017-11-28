@@ -35,11 +35,11 @@ def getDocumentTF():
         res.append(list(map(int, strTemp.split() )) )
     return res
 
-res = getDocumentTF()
-print("len(res): " , len(res))
-
-k =0
-for v in res:
-    if k < 3:
-        print(v)
-        k  = k + 1
+# res = getDocumentTF()
+# print("len(res): " , len(res))
+#
+# k =0
+# for v in res:
+#     if k < 3:
+#         print(v)
+#         k  = k + 1

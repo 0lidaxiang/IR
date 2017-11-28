@@ -10,6 +10,21 @@ import getQuerysList
 import getFileList
 import idfResult
 
+def getTF_IDF():
+    # createQueryTFFile()
+    res = []
+    with open('./tFIDF_result.txt') as f:
+        lines = f.read().splitlines()
+    for line in lines:
+        # strTemp = ''.join(line.split("\r\n"))
+        lineL = line.split(",")
+        cos_valList = []
+        for i in range(1, len(lineL) -1):
+            # print(lineL)
+            # print(type(lineL[i].split(":")), len(lineL[i].split(":")))
+            cos_valList.append(float(lineL[i].split(":")[1]))
+        res.append(cos_valList)
+    return res
 
 def getWeightFromHd5(weight_file_path):
     f = h5py.File(weight_file_path)
@@ -22,9 +37,9 @@ def getWeightFromHd5(weight_file_path):
     finally:
         f.close()
 
-# answer = getWeightFromHd5("./" + "my_model-948-393018_2017-11-23 22:08:23.h5")
-answer = getWeightFromHd5("./" + "39299-393018_2017-11-24 14:22:03.h5")
-
+# answer = getWeightFromHd5("./" + "39281-393018_2017-11-25 11:16:36.h5")
+answer = getWeightFromHd5("./" + "39281-393018_2017-11-25 11:16:36.h5")
+TFIDF = getTF_IDF()
 print("answer type and shape: ", type(answer), answer.shape, "\n")
 
 # compute sim by cos_val
@@ -45,7 +60,7 @@ for doc in docsList:
         now_doc_weight = c_w_d * answer[dic.index(word)] / doc_length
         # if c_w_d == 0:
             # print(c_w_d, answer[dic.index(word)], now_doc_weight, "\n")
-        doc_weight = doc_weight + 1.0* now_doc_weight +  math.log(idf[dic.index(word)])
+        doc_weight = doc_weight + now_doc_weight
     # doc_weight = doc_weight / doc_length
     docs_weight.append(doc_weight)
 print("docs_weight: ", type(docs_weight) , len(docs_weight))
@@ -64,7 +79,7 @@ for queryFile in queryFilesList:
             now_query_weight = c_w_d * answer[dic.index(word)]  / query_length
             # if c_w_d == 0:
                 # print(c_w_d, answer[dic.index(word)], now_query_weight, "\n")
-            query_weight = query_weight +  1. *now_query_weight +  math.log(idf[dic.index(word)])
+            query_weight = query_weight + now_query_weight
     # query_weight = query_weight / query_length
     querys_weight.append(query_weight)
 print("querys_weight: ", type(querys_weight) , len(querys_weight))
@@ -87,6 +102,7 @@ for query_weight in querys_weight:
     a = np.array(query_weight)
     aL = np.sqrt(a.dot(a))
 
+    # doc_index = 0
     for doc_weight in docs_weight:
         oneLine = {}
         b = np.array(doc_weight)
@@ -97,7 +113,7 @@ for query_weight in querys_weight:
         if dem != 0:
             cosVal = mem / dem
         oneLine["fileName"] = docsNameList[res_index]
-        oneLine["cosVal"] = cosVal
+        oneLine["cosVal"] = cosVal + 28 * TFIDF[query_index - 1][res_index]
         oneQueryResult.append(oneLine)
         res_index += 1
     oneQueryResult.sort(key=lambda k: k['cosVal'], reverse=True)
