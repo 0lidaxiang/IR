@@ -38,7 +38,8 @@ def getWeightFromHd5(weight_file_path):
         f.close()
 
 # answer = getWeightFromHd5("./" + "39281-393018_2017-11-25 11:16:36.h5")
-answer = getWeightFromHd5("./" + "39281-393018_2017-11-25 11:16:36.h5")
+# answer = getWeightFromHd5("./" + "1-393018_2017-11-30 18:07:33.h5")
+answer = getWeightFromHd5("./" + "1-2500-393018_2017-11-30 18:07:33.h5")
 TFIDF = getTF_IDF()
 print("answer type and shape: ", type(answer), answer.shape, "\n")
 
@@ -113,7 +114,7 @@ for query_weight in querys_weight:
         if dem != 0:
             cosVal = mem / dem
         oneLine["fileName"] = docsNameList[res_index]
-        oneLine["cosVal"] = cosVal + 28 * TFIDF[query_index - 1][res_index]
+        oneLine["cosVal"] = cosVal + 5 * TFIDF[query_index - 1][res_index]
         oneQueryResult.append(oneLine)
         res_index += 1
     oneQueryResult.sort(key=lambda k: k['cosVal'], reverse=True)

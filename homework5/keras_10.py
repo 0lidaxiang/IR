@@ -63,6 +63,9 @@ model = Model(inputs=[Input_Left, Input_Right], outputs=Prediction)
 model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['mse', 'mae', 'mape', 'cosine'])
 print(model.summary())
 
+# weights_file_path = "./10000-11-29.h5"
+# model.load_weights(weights_file_path, by_name=False)
+
 # total data size 393018
 data_size = 10
 for inputs in range(0, 39301):
@@ -85,9 +88,9 @@ for inputs in range(0, 39301):
     now_right_Input = np.array(right_Input)[input_start: input_end]
     label_y = np.array(label_y)
 
-    history = model.fit([now_left_Input , now_right_Input], label_y.reshape( data_size,1,13290), initial_epoch=0, epochs=60, verbose=0, shuffle=False)
+    history = model.fit([now_left_Input , now_right_Input], label_y.reshape( data_size,1,13290), initial_epoch=0, epochs=2510, verbose=0, shuffle=False)
 
-    if inputs % 5000 == 0 or inputs == 39100 or inputs == 39150 or inputs == 39200 or inputs == 39250 or inputs > 39290:
+    if inputs % 1 == 0 or inputs == 39100 or inputs == 39150 or inputs == 39200 or inputs == 39250 or inputs > 39290:
         # it can be others, like mean_absolute_error , cosine_proximity, mean_absolute_percentage_error
         loss_func_name = 'mean_squared_error'
         lossFileW_path = "./10Train/loss/" + str(inputs) + "-" + str(datetime.now()).split(".")[0] + ".log"
@@ -99,7 +102,7 @@ for inputs in range(0, 39301):
         # pyplot.plot(history.history[loss_func_name])
         # pyplot.show()
 
-        res_weights_file = "./10Train/weights/" +  str(inputs) + "-"  + str(train_data_size) + "_" + str(datetime.now()).split(".")[0] +".h5"
+        res_weights_file = "./10Train/weights/" +  str(inputs) + "-" + "2510-" + str(train_data_size) + "_" + str(datetime.now()).split(".")[0] +".h5"
         model.save_weights(res_weights_file)
 
     # res_embeddings_path = res_weights_file
