@@ -40,66 +40,45 @@ def getWeightFromHd5(weight_file_path):
 # answer = getWeightFromHd5("./" + "39281-393018_2017-11-25 11:16:36.h5")
 # answer = getWeightFromHd5("./" + "1-393018_2017-11-30 18:07:33.h5")
 answer = getWeightFromHd5("./" + "1-2500-393018_2017-11-30 18:07:33.h5")
-TFIDF = getTF_IDF()
-print("answer type and shape: ", type(answer), answer.shape, "\n")
 
+print("start compute querys_weight，docs_weight ------------------ ")
 # compute sim by cos_val
 queryFilesList = getQuerysList.getIntsFromFile()
 docsList = getFileList.getIntsFromFile()
 dic = dictionary.getDictionary()
-idf =  idfResult.getIDF()
-
-print("docs_weight start compute ------------------ ")
 startTime = datetime.now()
 docs_weight = []
-
 for doc in docsList:
     doc_length = len(doc)
     doc_weight = np.zeros(shape=(100, ))
     for word in doc:
         c_w_d = doc.count(word)
         now_doc_weight = c_w_d * answer[dic.index(word)] / doc_length
-        # if c_w_d == 0:
-            # print(c_w_d, answer[dic.index(word)], now_doc_weight, "\n")
         doc_weight = doc_weight + now_doc_weight
-    # doc_weight = doc_weight / doc_length
     docs_weight.append(doc_weight)
-print("docs_weight: ", type(docs_weight) , len(docs_weight))
-print("docs_weight finish compute , the excution time is : " + str(datetime.now() - startTime).split(".")[0])
 
-print("querys_weight start compute ------------------ ")
-start_query_Time = datetime.now()
 querys_weight = []
 for queryFile in queryFilesList:
     query_length = len(queryFile)
     query_weight = np.zeros(shape=(100, ))
-    # wordIndex = 0
     for word in queryFile:
         c_w_d = queryFile.count(word)
         if word in dic:
             now_query_weight = c_w_d * answer[dic.index(word)]  / query_length
-            # if c_w_d == 0:
-                # print(c_w_d, answer[dic.index(word)], now_query_weight, "\n")
             query_weight = query_weight + now_query_weight
-    # query_weight = query_weight / query_length
     querys_weight.append(query_weight)
-print("querys_weight: ", type(querys_weight) , len(querys_weight))
-print("querys_weight finish compute , the excution time is : " + str(datetime.now() - start_query_Time).split(".")[0])
+print("finish compute querys_weight，docs_weight , the excution time is : " + str(datetime.now() - startTime).split(".")[0])
 
-# print(docs_weight[0], docs_weight[0].shape)
-# print(querys_weight[0], querys_weight[0].shape)
-# print(answer[0], answer[0].shape)
-
-print("\n ------------------ sim start compute and write result ------------------ ")
+# print("\n ------------------ sim start compute and write result ------------------ ")
 startTime = datetime.now()
+TFIDF = getTF_IDF()
 fs = open("submission_TFIDF_MAP100.txt" , 'w')
 docsNameList = getFileList.getFileNameList()
-
 fs.write("Query,RetrievedDocuments" + "\n")
 query_index = 1
 for query_weight in querys_weight:
     oneQueryResult = []
-    res_index = 0
+    doc_index = 0
     a = np.array(query_weight)
     aL = np.sqrt(a.dot(a))
 
@@ -108,15 +87,14 @@ for query_weight in querys_weight:
         oneLine = {}
         b = np.array(doc_weight)
         bL = np.sqrt(b.dot(b))
-        mem = np.dot(a,b)
-        dem = aL * bL
-        cosVal = 0
+        dem = ( aL * bL)
+        cosVal = 1
         if dem != 0:
-            cosVal = mem / dem
-        oneLine["fileName"] = docsNameList[res_index]
-        oneLine["cosVal"] = cosVal + 5 * TFIDF[query_index - 1][res_index]
+            cosVal = (np.dot(a,b)) / dem
+        oneLine["fileName"] = docsNameList[doc_index]
+        oneLine["cosVal"] = cosVal + 5 * TFIDF[query_index - 1][doc_index]
         oneQueryResult.append(oneLine)
-        res_index += 1
+        doc_index += 1
     oneQueryResult.sort(key=lambda k: k['cosVal'], reverse=True)
 
     queryFileName = "50" + str(query_index).zfill(3) + ".query"
@@ -127,4 +105,4 @@ for query_weight in querys_weight:
     fs.write(queryFileName + "," + querySortedRes + "\n")
     query_index += 1
 fs.close()
-print("------------------ sim start compute and write result over , the excution time is : " + str(datetime.now() - startTime).split(".")[0] + "\n")
+print("finish compute and write sim-result , the excution time is : " + str(datetime.now() - startTime).split(".")[0] + "\n")

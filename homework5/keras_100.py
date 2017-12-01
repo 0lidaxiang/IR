@@ -67,13 +67,13 @@ print(model.summary())
 # model.load_weights(weights_file_path, by_name=False)
 
 # total data size 393018
-data_size = 10
-for inputs in range(0, 39301):
-    input_start = inputs * 10
-    input_end = input_start + 10
-    if inputs == 39300:
-        input_end = input_start + 8
-        data_size = 8
+data_size = 100
+for inputs in range(0, 3930):
+    input_start = inputs * 100
+    input_end = input_start + 100
+    if inputs == 3930:
+        input_end = input_start + 30
+        data_size = 30
     print(inputs)
 
     #preprocess the label_y
@@ -88,7 +88,7 @@ for inputs in range(0, 39301):
     now_right_Input = np.array(right_Input)[input_start: input_end]
     label_y = np.array(label_y)
 
-    history = model.fit([now_left_Input , now_right_Input], label_y.reshape( data_size,1,13290), initial_epoch=0, epochs=2490, verbose=0, shuffle=False)
+    history = model.fit([now_left_Input , now_right_Input], label_y.reshape( data_size,1,13290), initial_epoch=0, epochs=10000, verbose=0, shuffle=False)
 
     if inputs % 5 == 0 or inputs == 1 or inputs == 2 or inputs == 3 or inputs == 4 :
     # if inputs % 1 == 0 or inputs == 39100 or inputs == 39150 or inputs == 39200 or inputs == 39250 or inputs > 39290:
@@ -103,7 +103,7 @@ for inputs in range(0, 39301):
         # pyplot.plot(history.history[loss_func_name])
         # pyplot.show()
 
-        res_weights_file = "./10Train/weights/" +  str(inputs) + "-" + "2490-" + str(train_data_size) + "_" + str(datetime.now()).split(".")[0] +".h5"
+        res_weights_file = "./10Train/weights/" +  str(inputs) + "-" + "10000-" + str(train_data_size) + "_" + str(datetime.now()).split(".")[0] +".h5"
         model.save_weights(res_weights_file)
 
     # res_embeddings_path = res_weights_file
