@@ -18,16 +18,14 @@ This program is right.
 Compute MAP.
 
 ## Homework3
-This program is wrong.Algorithm maybe right.  
+This program is wrong.EM Algorithm maybe right.  
 EM Algorithm.
 
 ## Homework4
-This program is wrong.Algorithm maybe right.
+This program result effect is bad.Algorithm maybe right.
 Rocchio Algorithm applying in IR system.
 
 ## Homework5
-This program is going on and I'm writing codes.  
-
-Our goal is to implement a word embedding method by using
-Keras/TensorFlow/..., and then you should leverage the
-learned embeddings to do retrieval
+This program is right.  
+Our goal is to implement a word embedding method by using Keras, and then you should leverage the learned embeddings to do retrieval.
+Use CBOW, word embeddings, One-hot, Vector model. And we also can use Rocchio Algorithm to imporve the result's MAP.
