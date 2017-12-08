@@ -11,17 +11,13 @@ import getFileList
 import idfResult
 
 def getTF_IDF():
-    # createQueryTFFile()
     res = []
     with open('./tFIDF_result.txt') as f:
         lines = f.read().splitlines()
     for line in lines:
-        # strTemp = ''.join(line.split("\r\n"))
         lineL = line.split(",")
         cos_valList = []
         for i in range(1, len(lineL) -1):
-            # print(lineL)
-            # print(type(lineL[i].split(":")), len(lineL[i].split(":")))
             cos_valList.append(float(lineL[i].split(":")[1]))
         res.append(cos_valList)
     return res
@@ -37,8 +33,6 @@ def getWeightFromHd5(weight_file_path):
     finally:
         f.close()
 
-# answer = getWeightFromHd5("./" + "39281-393018_2017-11-25 11:16:36.h5")
-# answer = getWeightFromHd5("./" + "1-393018_2017-11-30 18:07:33.h5")
 answer = getWeightFromHd5("./" + "1-2500-393018_2017-11-30 18:07:33.h5")
 
 print("start compute querys_weight，docs_weight ------------------ ")
@@ -69,7 +63,6 @@ for queryFile in queryFilesList:
     querys_weight.append(query_weight)
 print("finish compute querys_weight，docs_weight , the excution time is : " + str(datetime.now() - startTime).split(".")[0])
 
-# print("\n ------------------ sim start compute and write result ------------------ ")
 startTime = datetime.now()
 TFIDF = getTF_IDF()
 fs = open("submission_TFIDF_MAP100.txt" , 'w')
@@ -82,7 +75,6 @@ for query_weight in querys_weight:
     a = np.array(query_weight)
     aL = np.sqrt(a.dot(a))
 
-    # doc_index = 0
     for doc_weight in docs_weight:
         oneLine = {}
         b = np.array(doc_weight)
@@ -92,7 +84,7 @@ for query_weight in querys_weight:
         if dem != 0:
             cosVal = (np.dot(a,b)) / dem
         oneLine["fileName"] = docsNameList[doc_index]
-        oneLine["cosVal"] = cosVal + 5 * TFIDF[query_index - 1][doc_index]
+        oneLine["cosVal"] =  cosVal + 5*TFIDF[query_index - 1][doc_index]
         oneQueryResult.append(oneLine)
         doc_index += 1
     oneQueryResult.sort(key=lambda k: k['cosVal'], reverse=True)
@@ -101,7 +93,6 @@ for query_weight in querys_weight:
     querySortedRes = ""
     for dicc in oneQueryResult[0:100]:
         querySortedRes += dicc["fileName"] +" "
-        # querySortedRes += str(dicc["cosVal"]) +" "
     fs.write(queryFileName + "," + querySortedRes + "\n")
     query_index += 1
 fs.close()

@@ -26,6 +26,7 @@ This program result effect is bad.Algorithm maybe right.
 Rocchio Algorithm applying in IR system.
 
 ## Homework5
-This program is right.  
+This program is right. But the keras train maybe not right.The CBOW result may be better only need 20~50 times train. My 2500 times train's good result is just a coincidence.And maybe we should given the word in query but not in document the socre of the three lowest TF_IDF socre, teacher's advice.
+
 Our goal is to implement a word embedding method by using Keras, and then you should leverage the learned embeddings to do retrieval.
 Use CBOW, word embeddings, One-hot, Vector model. And we also can use Rocchio Algorithm to imporve the result's MAP.

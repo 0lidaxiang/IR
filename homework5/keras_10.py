@@ -63,9 +63,6 @@ model = Model(inputs=[Input_Left, Input_Right], outputs=Prediction)
 model.compile(optimizer='Adam', loss='categorical_crossentropy', metrics=['mse', 'mae', 'mape', 'cosine'])
 print(model.summary())
 
-# weights_file_path = "./10000-11-29.h5"
-# model.load_weights(weights_file_path, by_name=False)
-
 # total data size 393018
 data_size = 10
 for inputs in range(0, 39301):
@@ -88,7 +85,7 @@ for inputs in range(0, 39301):
     now_right_Input = np.array(right_Input)[input_start: input_end]
     label_y = np.array(label_y)
 
-    history = model.fit([now_left_Input , now_right_Input], label_y.reshape( data_size,1,13290), initial_epoch=0, epochs=2490, verbose=0, shuffle=False)
+    history = model.fit([now_left_Input , now_right_Input], label_y.reshape( data_size,1,13290), initial_epoch=0, epochs=2500, verbose=0, shuffle=False)
 
     if inputs % 5 == 0 or inputs == 1 or inputs == 2 or inputs == 3 or inputs == 4 :
     # if inputs % 1 == 0 or inputs == 39100 or inputs == 39150 or inputs == 39200 or inputs == 39250 or inputs > 39290:

@@ -45,9 +45,9 @@ def computeAquery(queryIndex):
             idf = idfList[lineNum]
             qtf = querTF[lineNum][queryIndex]
             idfLogVal = math.log(idf)
-            # 3,3
+
             documentWeight = tf * idfLogVal
-            queryWeight = qtf * idfLogVal
+            queryWeight =  qtf * idfLogVal
 
             documentWeightVec.append(documentWeight)
             queryWeightVec.append(queryWeight)

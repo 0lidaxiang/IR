@@ -1,6 +1,25 @@
 # IR Homework1 Introduction
 This is the homework5 of NTUST CSIE IR course in  2017 fall.
 
+Run the main function to get the TOP 100 of final result:
+```
+python3 main_withTFIDF.py
+```
+The final result file is submission_TFIDF_MAP100.txt.
+
+If you want to re-generate TF_IDF score, you will need about three hours and you should modify the TF_IDF.py, then run :
+```
+python3 TF_IDF.py
+```
+
+If you want to re-generate CBOW score, you will need about many hours and you should modify the keras_10.py, then run :
+```
+python3 keras_10.py
+```
+But the keras train maybe not right.The CBOW result may be better only need 20~50 times train. My 2500 times train's good result is just a **coincidence**.
+
+And maybe we should given the word in query but not in document the socre of the three lowest TF_IDF socre, teacher's advice.
+
 ## steps1 Vector model
 + 1 : get the query list
 
