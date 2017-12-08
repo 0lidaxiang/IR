@@ -7,7 +7,7 @@ Kaggle Three Competitions's link is below:
 [Homework4](https://www.kaggle.com/c/NTUST-IR-HW4/leaderboard)  
 [Homework5](https://www.kaggle.com/c/NTUST-IR-HW5/leaderboard)
 # sourceData
-This is the data that shoubl be put in data or source floder in homework1,homework3,homework4.
+This is the data files that should be put in data or source floder of homework1,homework3,homework4,homework5.
 
 ## Homework1
 This program is right.  
